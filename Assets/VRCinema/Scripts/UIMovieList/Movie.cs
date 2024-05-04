@@ -1,0 +1,93 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Video;
+using Newtonsoft.Json;
+using UnityEngine.Networking;
+using static CardsControllerModel;
+
+[System.Serializable]
+public class MovieCards 
+{
+    
+    [JsonProperty("title")]
+    public string movieTitle;
+    [JsonProperty("movie_photo")]
+    public string urlPhotoName;
+    [JsonProperty("genres")]
+    public string genre;
+    [JsonProperty("url_move")]
+    public string movieURL;
+    [JsonProperty("discription_movie")]
+    public string discription;
+    [JsonProperty("movie_id")]
+    public string movieId;
+    [JsonProperty("like_id")]
+    public string likeId;
+    [JsonProperty("user_id")]
+    public string userId;
+
+    public MovieCards(string movieTitle, string userId, string genre, string discription,string urlPhotoName,  string movieURL, string movieId, string likeId)
+    {
+        this.movieTitle = movieTitle;
+        this.urlPhotoName = urlPhotoName;
+        this.discription = discription;
+        this.genre = genre;
+        this.movieURL = movieURL;
+        this.movieId = movieId;
+        this.likeId = likeId;
+        this.userId = userId;
+
+    }
+
+    public string ToJson()
+    {
+        return JsonUtility.ToJson(this);
+    }
+
+    public static MovieCards FromJson(string json)
+    {
+        return JsonUtility.FromJson<MovieCards>(json);
+    }
+}
+
+//public class MovieCardsProfile
+//{
+//    [JsonProperty("title")]
+//    public string movieTitle;
+//    [JsonProperty("movie_photo")]
+//    public string urlPhotoName;
+//    [JsonProperty("genres")]
+//    public string genre;
+//    [JsonProperty("url_move")]
+//    public string movieURL;
+//    [JsonProperty("discription_movie")]
+//    public string discription;
+//    [JsonProperty("movie_id")]
+//    public int movieId;
+//    [JsonProperty("like_id")]
+//    public int likeId;
+
+//    public MovieCardsProfile(string movieTitle, string genre, string discription, string urlPhotoName, string movieURL, int movieId, int likeId)
+//    {
+//        this.movieTitle = movieTitle;
+//        this.urlPhotoName = urlPhotoName;
+//        this.discription = discription;
+//        this.genre = genre;
+//        this.movieURL = movieURL;
+//        this.movieId = movieId;
+//        this.likeId = likeId;
+//    }
+
+//    public string ToJson()
+//    {
+//        return JsonConvert.SerializeObject(this);
+//    }
+
+//    public static MovieCardsProfile FromJson(string json)
+//    {
+//        return JsonConvert.DeserializeObject<MovieCardsProfile>(json);
+//    }
+//}
