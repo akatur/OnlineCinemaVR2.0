@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{FA76207E-270E-6D0B-57E2-E12ABFE30A59}</ProjectGuid>
+    <ProjectGuid>{2CE92A6E-2D03-70E1-5067-9FEB6EC24B3C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -867,7 +867,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Nobi.UiRoundedCorners.csproj">
-      <Project>{F74E5665-A8C3-0543-5D11-02A0E5C9E987}</Project>
+      <Project>{DDB6B773-D368-E8BC-CDD3-B269FA8BDE47}</Project>
       <Name>Nobi.UiRoundedCorners</Name>
     </ProjectReference>
   </ItemGroup>

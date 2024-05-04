@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{F74E5665-A8C3-0543-5D11-02A0E5C9E987}</ProjectGuid>
+    <ProjectGuid>{DDB6B773-D368-E8BC-CDD3-B269FA8BDE47}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Nobi.UiRoundedCorners</AssemblyName>
