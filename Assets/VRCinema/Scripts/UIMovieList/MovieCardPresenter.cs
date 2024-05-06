@@ -12,29 +12,64 @@ public class MovieCardPresenter : MonoBehaviour
     [SerializeField] private Button btnFavorit;
     [SerializeField] private Button btnLike;
 
+    [SerializeField] private Button btnDeleteLike;
+    [SerializeField] private Button btnDeleteFavorit;
+
     public Text movieTitle;
     public Image PosterMovie;
     public string urlPhotoName;
 
+    public MovieCards movie;
+    public event Action <MovieCardPresenter> OnButtonFavorClick;
+    public event Action <MovieCardPresenter> OnButtonLikeClick;
 
-    public MovieCards   movie;
+    public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
+    public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
 
-    public event Action <MovieCards> OnButtonFavorClick;
-    public event Action <MovieCards> OnButtonLikeClick;
+
+    //public event Action <MovieCardPresenter> OnButtonSelectMovie;
+
+
 
     public void Init(MovieCards movie)
     {
         movieTitle.text = movie.movieTitle;
         this.movie = movie;
 
+        //if (btnFavorit != null)
+        //{
+        //    btnFavorit.onClick.AddListener(ButtonFavClick);
+        //}
+        if (btnLike != null)
+        {
+            btnLike.onClick.AddListener(ButtonLikeClick);
+        }
+        if (btnDeleteLike != null)
+        {
+            btnDeleteLike.onClick.AddListener(ButtonDeleteLikeClick);
+        }
+
+        
+
         //StartCoroutine(LoadImageFromURL(movie.urlPhotoName));
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //btnFavorit.onClick.AddListener(ButtonFavClick);
-        //btnLike.onClick.AddListener(ButtonLikeClick);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
+
+    public void ButtonDeleteLikeClick()
+    {
+        OnButtonDeleteLikeClick?.Invoke(this);
+        Destroy(this.gameObject);
+    }
+
+    public void ButtonFavClick()
+    {
+        OnButtonFavorClick?.Invoke(this);
+    } 
+    public void ButtonLikeClick()
+    {
+        OnButtonLikeClick?.Invoke(this);
+    }
+    
+
 
     //IEnumerator LoadImageFromURL(string urlPhotoName)
     //{
@@ -54,6 +89,6 @@ public class MovieCardPresenter : MonoBehaviour
     //}
 
 
-   
+
 
 }

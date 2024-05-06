@@ -18,15 +18,15 @@ using System.Linq;
 public class CardsControllerModel : MonoBehaviour
 {
 
-    public event Action OnInsert;
-
+    public event Action OnInsertAllMovies;
+    public event Action OnInsertLikes;
+    public event Action OnInsertFav;
+    public event Action OnInsertWatch;
 
     public List<MovieCards> MovieList = new();
     public List<MovieCards> LikeList = new();
-
     public List<MovieCards> FavouritesList = new();
     public List<MovieCards> WatchedList = new();
-
 
     private HashSet<string> uniqueTitlesInt = new HashSet<string>();
 
@@ -45,27 +45,20 @@ public class CardsControllerModel : MonoBehaviour
         }
     }
 
-   
-    
-
-    //private string connectionString = "Server=127.0.0.1;Database=cinemabd;User ID=root;Password='';";
     private VideoPlayer videoPlayer;
 
-   
-   
     private void Start()
     {
-        StartCoroutine(GetMoviesFromServer());
-        //StartCoroutine(GetLikesFromServer());
-
-        //LoadingCards();
-        //LoadingLikes();
-        //LoadingFavourites();
-        //LoadingWatched();
-
+        GetMovie();
     }
 
-    private IEnumerator GetMoviesFromServer()
+    public void GetMovie()
+    {
+        StartCoroutine(GetMoviesFromServer());
+    }
+
+
+    public IEnumerator GetMoviesFromServer()
     {
         UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/getmovie");
 
@@ -75,27 +68,28 @@ public class CardsControllerModel : MonoBehaviour
         {
             string json = www.downloadHandler.text;
             
-
             MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
-            //Debug.Log("kok1");
-            //Debug.Log(movies);
 
             foreach (var movie in movies)
             {
+                string movieId = movie.movieId;
+                if (MovieList.Any(existingMovie => existingMovie.movieId == movieId))
+                {
+                    continue;
+                }
+
                 string movieTitle = movie.movieTitle;
                 string genre = movie.genre;
                 string movieURL = movie.movieURL;
                 string urlPhotoName = movie.urlPhotoName;
                 string description = movie.discription;
-                string movieId = movie.movieId;
+                
                 string likeId = movie.likeId;
-
-                //Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
 
                 MovieCards movieCard = new MovieCards(movieTitle, likeId ,genre, description, urlPhotoName, movieURL, movieId, likeId);
                 MovieList.Add(movieCard);
-
             }
+            OnInsertAllMovies?.Invoke();
         }
         else
         {
@@ -105,15 +99,6 @@ public class CardsControllerModel : MonoBehaviour
         www.Dispose();
         StopCoroutine(GetMoviesFromServer());
     }
-
-
-    //public void invokeLikesCards()
-    //{
-    //    StartCoroutine(GetDataFromServer());
-    //}
-
-
-
 
     public void invokeLikesCards()
     {
@@ -143,20 +128,14 @@ public class CardsControllerModel : MonoBehaviour
     {
         MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
         Debug.Log(json + " like");
-        //textCanvas.text = "";
 
         foreach (var movie in movies)
         {
             string movieId = movie.movieId;
-
-            
-            // Проверяем, есть ли фильм с таким же идентификатором в списке
             if (LikeList.Any(existingMovie => existingMovie.movieId == movieId))
             {
-                continue; // Пропускаем фильм, если он уже присутствует в списке
+                continue; 
             }
-
-
             string movieTitle = movie.movieTitle;
             string genre = movie.genre;
             string movieURL = movie.movieURL;
@@ -166,14 +145,223 @@ public class CardsControllerModel : MonoBehaviour
             string likeId = movie.likeId;
 
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-
             MovieCards movieCard = new MovieCards(movieTitle, userId, genre, description, urlPhotoName, movieURL, movieId, likeId);
             LikeList.Add(movieCard);
             Debug.Log(movieCard);
         }
-        OnInsert?.Invoke();
-
+        OnInsertLikes?.Invoke();
     }
+
+    public void invokeFavCards()
+    {
+        string userId = UserInfo.user_id;
+        Debug.Log(userId);
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/datafavorite?user_id=" + userId);
+
+        StartCoroutine(ProcessRequestFav(www));
+    }
+
+    private IEnumerator ProcessRequestFav(UnityWebRequest www)
+    {
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            string json = www.downloadHandler.text;
+            ParseAndSortDataFav(json);
+        }
+        else
+        {
+            Debug.LogError(www.error);
+        }
+    }
+
+    private void ParseAndSortDataFav(string json)
+    {
+        MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
+        Debug.Log(json + " fav");
+
+        foreach (var movie in movies)
+        {
+            string movieId = movie.movieId;
+            if (FavouritesList.Any(existingMovie => existingMovie.movieId == movieId))
+            {
+                continue;
+            }
+            string movieTitle = movie.movieTitle;
+            string genre = movie.genre;
+            string movieURL = movie.movieURL;
+            string urlPhotoName = movie.urlPhotoName;
+            string description = movie.discription;
+            string userId = UserInfo.user_id;
+            string likeId = movie.likeId;
+
+            Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
+            MovieCards movieCard = new MovieCards(movieTitle, userId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+            FavouritesList.Add(movieCard);
+            Debug.Log(movieCard);
+        }
+        OnInsertFav?.Invoke();
+    }
+
+    public void invokeWatchCards()
+    {
+        string userId = UserInfo.user_id;
+        Debug.Log(userId);
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/history?user_id=" + userId);
+
+        StartCoroutine(ProcessRequestWatch(www));
+    }
+
+    private IEnumerator ProcessRequestWatch(UnityWebRequest www)
+    {
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            string json = www.downloadHandler.text;
+            ParseAndSortDataWatch(json);
+        }
+        else
+        {
+            Debug.LogError(www.error);
+        }
+    }
+
+    private void ParseAndSortDataWatch(string json)
+    {
+        MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
+        Debug.Log(json + " fav");
+
+        foreach (var movie in movies)
+        {
+            string movieId = movie.movieId;
+            if (WatchedList.Any(existingMovie => existingMovie.movieId == movieId))
+            {
+                continue;
+            }
+            string movieTitle = movie.movieTitle;
+            string genre = movie.genre;
+            string movieURL = movie.movieURL;
+            string urlPhotoName = movie.urlPhotoName;
+            string description = movie.discription;
+            string userId = UserInfo.user_id;
+            string likeId = movie.likeId;
+
+            Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
+            MovieCards movieCard = new MovieCards(movieTitle, userId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+            WatchedList.Add(movieCard);
+            Debug.Log(movieCard);
+        }
+        OnInsertWatch?.Invoke();
+    }
+
+
+    public void AddToLike(MovieCards movie)
+    {
+        StartCoroutine(AddToLikeCoroutine(Convert.ToInt32( movie.movieId),movie.movieTitle));
+    }
+
+    private IEnumerator AddToLikeCoroutine(int movieId, string movieTitle)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("movieId", movieId.ToString());
+        form.AddField("userId", UserInfo.user_id.ToString());
+        form.AddField("title", movieTitle);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:3000/addtolikes", form))
+        {
+            yield return www.SendWebRequest();
+            try
+            {
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    string response = www.downloadHandler.text;
+
+                    Debug.Log("Фильм добавлен в like: " + response);
+                }
+                else
+                {
+                    Debug.LogError("Ошибка при добавлении фильма в like: " + www.error);
+                }
+            }
+            catch (System.Exception er)
+            {
+
+                Debug.LogError("нельзя добавлять несколько фильмов: " + er.Message);
+            }
+        }
+        StopCoroutine(AddToLikeCoroutine(movieId, movieTitle));
+    }
+
+
+
+    public void AddToFavorites(MovieCards movie)
+    {
+        StartCoroutine(AddFavorite(Convert.ToInt32(movie.movieId), movie.movieTitle));
+    }
+
+    IEnumerator AddFavorite(int movieId, string movieTitle)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("movieId", movieId.ToString());
+        form.AddField("userId", UserInfo.user_id.ToString());
+        form.AddField("title", movieTitle);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:3000/addtofavorites", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Фильм добавлен в favorites.");
+            }
+            else
+            {
+                Debug.LogError(www.error);
+            }
+        }
+        StopCoroutine(AddFavorite(movieId, movieTitle));
+    }
+
+    public void OnButtonClickDeleteLike(MovieCards movie)
+    {
+        StartCoroutine(DeleteLikesOnServer(movie));
+    }
+
+
+    private IEnumerator DeleteLikesOnServer(MovieCards movie)
+    {
+        string userId = UserInfo.user_id;
+        int likeId = Convert.ToInt32(movie.likeId);
+        string title = movie.movieTitle;
+
+        Debug.Log("userId " + userId);
+        Debug.Log("movieId " + likeId);
+
+        string url = $"http://localhost:3000/likesDelete?user_id={userId}&like_id={likeId}";
+        UnityWebRequest requests = UnityWebRequest.Delete(url);
+
+        yield return requests.SendWebRequest();
+
+        if (requests.result == UnityWebRequest.Result.Success)
+        {
+            uniqueTitlesInt.Remove(title);
+
+            LikeList.Remove(movie);
+
+            Debug.Log(userId + "  " + likeId + "удалось");
+
+        }
+        else
+        {
+            Debug.LogError(requests.error);
+        }
+        StopCoroutine(DeleteLikesOnServer(movie));
+    }
+
+
     //private IEnumerator GetLikesFromServer()
     //{
     //    string userId = UserInfo.user_id;
@@ -291,13 +479,13 @@ public class CardsControllerModel : MonoBehaviour
     //{
     //    connection = new MySqlConnection(connectionString);
     //    connection.Open();
-        
+
     //    string sqlQuery = "SELECT fav.favorite_id , fav.title, m.genres, m.url_move, m.movie_id, m.movie_photo, m.discription_movie " +
     //              "FROM favourites fav " +
     //              "INNER JOIN movies m " +
     //              "ON fav.movie_id = m.movie_id";
 
-        
+
 
     //    MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
     //    MySqlDataReader reader = cmd.ExecuteReader();
@@ -327,7 +515,7 @@ public class CardsControllerModel : MonoBehaviour
     //              "FROM watched_movies wat " +
     //              "INNER JOIN movies m " +
     //              "ON wat.movie_id = m.movie_id";
-       
+
     //    MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
     //    MySqlDataReader reader = cmd.ExecuteReader();
 

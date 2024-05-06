@@ -11,7 +11,6 @@ using static CardsControllerModel;
 [System.Serializable]
 public class MovieCards 
 {
-    
     [JsonProperty("title")]
     public string movieTitle;
     [JsonProperty("movie_photo")]
@@ -39,7 +38,6 @@ public class MovieCards
         this.movieId = movieId;
         this.likeId = likeId;
         this.userId = userId;
-
     }
 
     public string ToJson()
@@ -52,42 +50,3 @@ public class MovieCards
         return JsonUtility.FromJson<MovieCards>(json);
     }
 }
-
-//public class MovieCardsProfile
-//{
-//    [JsonProperty("title")]
-//    public string movieTitle;
-//    [JsonProperty("movie_photo")]
-//    public string urlPhotoName;
-//    [JsonProperty("genres")]
-//    public string genre;
-//    [JsonProperty("url_move")]
-//    public string movieURL;
-//    [JsonProperty("discription_movie")]
-//    public string discription;
-//    [JsonProperty("movie_id")]
-//    public int movieId;
-//    [JsonProperty("like_id")]
-//    public int likeId;
-
-//    public MovieCardsProfile(string movieTitle, string genre, string discription, string urlPhotoName, string movieURL, int movieId, int likeId)
-//    {
-//        this.movieTitle = movieTitle;
-//        this.urlPhotoName = urlPhotoName;
-//        this.discription = discription;
-//        this.genre = genre;
-//        this.movieURL = movieURL;
-//        this.movieId = movieId;
-//        this.likeId = likeId;
-//    }
-
-//    public string ToJson()
-//    {
-//        return JsonConvert.SerializeObject(this);
-//    }
-
-//    public static MovieCardsProfile FromJson(string json)
-//    {
-//        return JsonConvert.DeserializeObject<MovieCardsProfile>(json);
-//    }
-//}

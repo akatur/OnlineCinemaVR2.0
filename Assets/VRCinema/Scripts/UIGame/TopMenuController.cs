@@ -22,10 +22,10 @@ public class TopMenuController : MonoBehaviour
 
     public event Action<MovieCards> OnButtonLikeClick;
 
-
     private GameObject activeWindow = null;
 
     [SerializeField] private CardsControllerModel cardsControllerModel;
+    CardControllerPresenter cardsControllerPresenter;
 
 
    
@@ -45,10 +45,18 @@ public class TopMenuController : MonoBehaviour
         btnLike.onClick.AddListener(cardsControllerModel.invokeLikesCards);
 
         btnFavourite.onClick.AddListener(StateWindowUIFavouritesList);
+        btnFavourite.onClick.AddListener(cardsControllerModel.invokeFavCards);
+
         btnWatched.onClick.AddListener(StateWindowUIWatchedList);
+        btnWatched.onClick.AddListener(cardsControllerModel.invokeWatchCards);
+
+
         btnProfile.onClick.AddListener(StateWindowUIProfile);
-        btnBack.onClick.AddListener(Back);
+
         
+        btnBack.onClick.AddListener(Back);
+        btnBack.onClick.AddListener(cardsControllerModel.GetMovie);
+
 
     }
 

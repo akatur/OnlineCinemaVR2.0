@@ -13,7 +13,10 @@ using Unity.VisualScripting;
 
 public class CardControllerPresenter : MonoBehaviour
 {
-    [SerializeField] private List<MovieCardPresenter> cardList = new List<MovieCardPresenter>();
+    [SerializeField] private List<MovieCardPresenter> cardListMovies = new List<MovieCardPresenter>();
+    [SerializeField] private List<MovieCardPresenter> cardListLikes = new List<MovieCardPresenter>();
+    [SerializeField] private List<MovieCardPresenter> cardListFav = new List<MovieCardPresenter>();
+    [SerializeField] private List<MovieCardPresenter> cardListWatch = new List<MovieCardPresenter>();
 
     [SerializeField] private VideoPlayer videoPlayer;
 
@@ -50,36 +53,26 @@ public class CardControllerPresenter : MonoBehaviour
 
     private void Start()
     {
-        cardsControllerModel.OnInsert += InstCardsLikes;
+        LoadingCards();
+        cardsControllerModel.OnInsertLikes += InstCardsLikes;
+        cardsControllerModel.OnInsertFav += InstCardsFav;
+        cardsControllerModel.OnInsertWatch += InstCardsWatch;
+        cardsControllerModel.OnInsertAllMovies += LoadingCards;
 
+        //cardsControllerModel.OnInsertLikes += InstCardsLikes;
+        //cardsControllerModel.OnInsertFav += InstCardsFav;
+        //cardsControllerModel.OnInsertWatch += InstCardsWatch;
 
-        foreach (var item in cardsControllerModel.MovieList)
-        {
-            
-
-            MovieCardPresenter movieCard ;
-            movieCard = Instantiate(btnCard, Vector3.zero, Quaternion.identity, PanelCards);
-            
-            movieCard.Init(item);
-
-            //movieCard.OnButtonFavorClick += cardsControllerModel.AddToFavorites;
-            //movieCard.OnButtonLikeClick += cardsControllerModel.AddToLike;
-        }
-
-       
-
-        //foreach (var item in cardsControllerModel.FavouritesList)
+        //foreach (var item in cardsControllerModel.MovieList)
         //{
-        //    LikesCardsPresenter likesCard;
-        //    likesCard = Instantiate(btnCardFav, Vector3.zero, Quaternion.identity, PanelCardsFav);
-        //    likesCard.Init(item);
-        //}
+        //    MovieCardPresenter movieCard ;
+        //    movieCard = Instantiate(btnCard, Vector3.zero, Quaternion.identity, PanelCards);
+        //    movieCard.Init(item);
+        //    cardListMovies.Add(movieCard);
 
-        //foreach (var item in cardsControllerModel.WatchedList)
-        //{
-        //    LikesCardsPresenter likeCard;
-        //    likeCard = Instantiate(btnCardWatched, Vector3.zero, Quaternion.identity, PanelCardsWatched);
-        //    likeCard.Init(item);
+        //    movieCard.OnButtonFavorClick += AddToFavorites;
+
+        //    movieCard.OnButtonLikeClick += AddToLikes;
         //}
 
 
@@ -88,23 +81,102 @@ public class CardControllerPresenter : MonoBehaviour
         //    cardButton.onClick.AddListener(() => PlayMovie(movieURL, movieId, movieTitle));
         //    cardButton.onClick.AddListener(() => AddToWatched(movieId, movieTitle));
         //}
-
     }
 
-    private void InstCardsLikes()
-    {
 
-        foreach (var item in cardList)
+
+    public void LoadingCards()
+    {
+        foreach (var item in cardListMovies)
         {
             Destroy(item.gameObject);
         }
-        cardList.Clear();
+       
+        foreach (var item in cardsControllerModel.MovieList)
+        {
+            MovieCardPresenter movieCard;
+            movieCard = Instantiate(btnCard, Vector3.zero, Quaternion.identity, PanelCards);
+            movieCard.Init(item);
+            cardListMovies.Add(movieCard);
+            movieCard.OnButtonFavorClick += AddToFavorites;
+            movieCard.OnButtonLikeClick += AddToLikes;
+        }
+    }
+
+
+
+    private void AddToLikes(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddToLike(movieCardPresenter.movie);
+        cardListLikes.Add(movieCardPresenter);
+    }
+
+    private void AddToFavorites(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddToFavorites(movieCardPresenter.movie);
+        cardListFav.Add(movieCardPresenter);
+    }
+
+
+    private void InstCardsLikes()
+    {
+        foreach (var item in cardListLikes)
+        {
+            Destroy(item.gameObject);
+        }
+        cardListLikes.Clear();
         foreach (var item in cardsControllerModel.LikeList)
         {
             MovieCardPresenter likeCard;
             likeCard = Instantiate(btnCardLike, Vector3.zero, Quaternion.identity, PanelCardsLike);
             likeCard.Init(item);
-            cardList.Add(likeCard);
+            cardListLikes.Add(likeCard);
+            likeCard.OnButtonDeleteLikeClick += OnButtonClickDeleteLikes;
+        }
+    }
+
+    private void OnButtonClickDeleteLikes(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.OnButtonClickDeleteLike(movieCardPresenter.movie);
+        cardListLikes.Remove(movieCardPresenter);
+    }
+
+
+
+
+    private void InstCardsFav()
+    {
+        foreach (var item in cardListFav)
+        {
+            Destroy(item.gameObject);
+        }
+        cardListFav.Clear();
+        foreach (var item in cardsControllerModel.FavouritesList)
+        {
+            MovieCardPresenter likeCard;
+            likeCard = Instantiate(btnCardLike, Vector3.zero, Quaternion.identity, PanelCardsFav);
+            likeCard.Init(item);
+            cardListFav.Add(likeCard);
+
+            //likeCard.OnButtonDeleteLikeClick += cardsControllerModel.OnButtonClickDeleteLike;
+
+        }
+    }
+
+    private void InstCardsWatch()
+    {
+        foreach (var item in cardListWatch)
+        {
+            Destroy(item.gameObject);
+        }
+        cardListWatch.Clear();
+        foreach (var item in cardsControllerModel.WatchedList)
+        {
+            MovieCardPresenter likeCard;
+            likeCard = Instantiate(btnCardLike, Vector3.zero, Quaternion.identity, PanelCardsWatched);
+            likeCard.Init(item);
+            cardListWatch.Add(likeCard);
+            //likeCard.OnButtonDeleteLikeClick += cardsControllerModel.OnButtonClickDeleteLike;
         }
     }
 
