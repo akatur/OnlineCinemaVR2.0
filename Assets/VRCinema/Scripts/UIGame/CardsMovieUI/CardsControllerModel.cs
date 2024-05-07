@@ -85,8 +85,9 @@ public class CardsControllerModel : MonoBehaviour
                 string description = movie.discription;
                 string likeId = movie.likeId;
                 string favoriteId = movie.favoriteId;
+                string watchedId = movie.watchedId;
 
-                MovieCards movieCard = new MovieCards(movieTitle, likeId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+                MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
                 MovieList.Add(movieCard);
             }
             OnInsertAllMovies?.Invoke();
@@ -128,8 +129,6 @@ public class CardsControllerModel : MonoBehaviour
     {
         MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
         Debug.Log(json + " like");
-
-
         LikeList.Clear();
 
         foreach (var movie in movies)
@@ -147,9 +146,10 @@ public class CardsControllerModel : MonoBehaviour
             string userId = UserInfo.user_id;
             string likeId = movie.likeId;
             string favoriteId = movie.favoriteId;
+            string watchedId = movie.watchedId;
 
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-            MovieCards movieCard = new MovieCards(movieTitle, userId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+            MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
             LikeList.Add(movieCard);
             Debug.Log(movieCard);
         }
@@ -200,10 +200,11 @@ public class CardsControllerModel : MonoBehaviour
             string userId = UserInfo.user_id;
             string likeId = movie.likeId;
             string favoriteId = movie.favoriteId;
+            string watchedId = movie.watchedId;
             
 
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-            MovieCards movieCard = new MovieCards(movieTitle, userId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+            MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
             FavouritesList.Add(movieCard);
             Debug.Log(movieCard);
         }
@@ -254,9 +255,10 @@ public class CardsControllerModel : MonoBehaviour
             string userId = UserInfo.user_id;
             string likeId = movie.likeId;
             string favoriteId = movie.favoriteId;
+            string watchedId = movie.watchedId;
 
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-            MovieCards movieCard = new MovieCards(movieTitle, userId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+            MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
             WatchedList.Add(movieCard);
             Debug.Log(movieCard);
         }
@@ -332,6 +334,35 @@ public class CardsControllerModel : MonoBehaviour
         StopCoroutine(AddFavorite(movieId, movieTitle));
     }
 
+    public void AddTWatched(MovieCards movie)
+    {
+        StartCoroutine(AddTWatch(Convert.ToInt32(movie.movieId), movie.movieTitle));
+    }
+
+    IEnumerator AddTWatch(int movieId, string movieTitle)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("movieId", movieId.ToString());
+        form.AddField("userId", UserInfo.user_id.ToString());
+        form.AddField("title", movieTitle);
+
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost:3000/addtowatched", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Фильм добавлен в watched.");
+            }
+            else
+            {
+                Debug.LogError(www.error);
+            }
+        }
+        StopCoroutine(AddTWatch(movieId, movieTitle));
+    }
+
     public void OnButtonClickDeleteLike(MovieCards movie)
     {
         StartCoroutine(DeleteLikesOnServer(movie));
@@ -354,11 +385,8 @@ public class CardsControllerModel : MonoBehaviour
         if (requests.result == UnityWebRequest.Result.Success)
         {
             uniqueTitlesInt.Remove(title);
-
             LikeList.Remove(movie);
-
             Debug.Log(userId + "  " + likeId + "удалось");
-
         }
         else
         {
@@ -369,16 +397,11 @@ public class CardsControllerModel : MonoBehaviour
 
     public void OnButtonClickDeleteFav(MovieCards movie)
     {
-
         StartCoroutine(DeleteFavOnServer(movie));
-
-        Debug.Log("!!!!!!!!!!!!!!!!!!!!!!!!! ");
-
     }
 
     private IEnumerator DeleteFavOnServer(MovieCards movie)
     {
-
         string userId = UserInfo.user_id;
         int favoriteId = Convert.ToInt32(movie.favoriteId);
         string title = movie.movieTitle;
@@ -396,7 +419,6 @@ public class CardsControllerModel : MonoBehaviour
             uniqueTitlesInt.Remove(title);
             FavouritesList.Remove(movie);
             Debug.Log(userId + "  " + favoriteId + "удалось");
-
         }
         else
         {
@@ -404,6 +426,42 @@ public class CardsControllerModel : MonoBehaviour
         }
         StopCoroutine(DeleteFavOnServer(movie));
     }
+
+    public void OnButtonClickDeleteWatch(MovieCards movie)
+    {
+        StartCoroutine(DeleteWatchOnServer(movie));
+    }
+
+    private IEnumerator DeleteWatchOnServer(MovieCards movie)
+    {
+        string userId = UserInfo.user_id;
+        int watchedId = Convert.ToInt32(movie.watchedId);
+        string title = movie.movieTitle;
+
+        Debug.Log("userId " + userId);
+        Debug.Log("movieId " + watchedId);
+
+        string url = $"http://localhost:3000/hisDelete?user_id={userId}&watched_id={watchedId}";
+        UnityWebRequest request = UnityWebRequest.Delete(url);
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            uniqueTitlesInt.Remove(title);
+            WatchedList.Remove(movie);
+            Debug.Log(userId + "  " + watchedId + "удалось");
+        }
+        else
+        {
+            Debug.LogError(request.error);
+        }
+        StopCoroutine(DeleteWatchOnServer(movie));
+    }
+
+
+
+
     //private IEnumerator GetLikesFromServer()
     //{
     //    string userId = UserInfo.user_id;

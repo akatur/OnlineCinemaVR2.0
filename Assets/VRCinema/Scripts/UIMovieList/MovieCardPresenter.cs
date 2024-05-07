@@ -9,22 +9,27 @@ using UnityEngine.UI;
 public class MovieCardPresenter : MonoBehaviour
 {
 
+    [SerializeField] private Button btnPosterMovie;
     [SerializeField] private Button btnFavorit;
     [SerializeField] private Button btnLike;
 
     [SerializeField] private Button btnDeleteLike;
     [SerializeField] private Button btnDeleteFavorit;
+    [SerializeField] private Button btnDeleteWatch;
 
     public Text movieTitle;
     public Image PosterMovie;
+
     public string urlPhotoName;
 
     public MovieCards movie;
     public event Action <MovieCardPresenter> OnButtonFavorClick;
     public event Action <MovieCardPresenter> OnButtonLikeClick;
+    public event Action <MovieCardPresenter> OnButtonWatchClick;
 
     public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
     public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
+    public event Action <MovieCardPresenter> OnButtonDeleteWatchClick;
 
 
     //public event Action <MovieCardPresenter> OnButtonSelectMovie;
@@ -36,10 +41,6 @@ public class MovieCardPresenter : MonoBehaviour
         movieTitle.text = movie.movieTitle;
         this.movie = movie;
 
-        //if (btnFavorit != null)
-        //{
-        //    btnFavorit.onClick.AddListener(ButtonFavClick);
-        //}
         if (btnLike != null)
         {
             btnLike.onClick.AddListener(ButtonLikeClick);
@@ -47,6 +48,10 @@ public class MovieCardPresenter : MonoBehaviour
         if (btnFavorit != null)
         {
             btnFavorit.onClick.AddListener(ButtonFavClick);
+        }
+        if (btnPosterMovie != null)
+        {
+            btnPosterMovie.onClick.AddListener(ButtonWatchClick);
         }
 
 
@@ -58,8 +63,10 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnDeleteFavorit.onClick.AddListener(ButtonDeleteFavClick);
         }
-
-
+        if (btnDeleteWatch != null)
+        {
+            btnDeleteWatch.onClick.AddListener(ButtonDeleteWatchClick);
+        }
 
         //StartCoroutine(LoadImageFromURL(movie.urlPhotoName));
     }
@@ -76,6 +83,12 @@ public class MovieCardPresenter : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    public void ButtonDeleteWatchClick()
+    {
+        OnButtonDeleteWatchClick?.Invoke(this);
+        Destroy(this.gameObject);
+    }
+
 
     public void ButtonFavClick()
     {
@@ -85,7 +98,11 @@ public class MovieCardPresenter : MonoBehaviour
     {
         OnButtonLikeClick?.Invoke(this);
     }
-    
+    public void ButtonWatchClick()
+    {
+        OnButtonWatchClick?.Invoke(this);
+    }
+
 
 
     //IEnumerator LoadImageFromURL(string urlPhotoName)

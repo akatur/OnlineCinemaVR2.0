@@ -83,7 +83,19 @@ public class CardControllerPresenter : MonoBehaviour
         //}
     }
 
+    private void AddToLikes(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddToLike(movieCardPresenter.movie);
+    }
 
+    private void AddToFavorites(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddToFavorites(movieCardPresenter.movie);
+    }
+    private void AddTWatched(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddTWatched(movieCardPresenter.movie);
+    }
 
     public void LoadingCards()
     {
@@ -100,21 +112,9 @@ public class CardControllerPresenter : MonoBehaviour
             cardListMovies.Add(movieCard);
             movieCard.OnButtonFavorClick += AddToFavorites;
             movieCard.OnButtonLikeClick += AddToLikes;
+            movieCard.OnButtonWatchClick += AddTWatched;
         }
     }
-
-
-
-    private void AddToLikes(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.AddToLike(movieCardPresenter.movie);
-    }
-
-    private void AddToFavorites(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.AddToFavorites(movieCardPresenter.movie);
-    }
-
 
     private void InstCardsLikes()
     {
@@ -147,25 +147,8 @@ public class CardControllerPresenter : MonoBehaviour
             likeCard.Init(item);
             cardListFav.Add(likeCard);
             likeCard.OnButtonDeleteFavorClick += OnButtonClickDeleteFav;
-            
-
         }
     }
-
-    private void OnButtonClickDeleteLikes(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.OnButtonClickDeleteLike(movieCardPresenter.movie);
-        cardListLikes.Remove(movieCardPresenter);
-    }
-
-
-    private void OnButtonClickDeleteFav(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.OnButtonClickDeleteFav(movieCardPresenter.movie);
-        cardListFav.Remove(movieCardPresenter);
-    }
-
-  
 
     private void InstCardsWatch()
     {
@@ -177,13 +160,30 @@ public class CardControllerPresenter : MonoBehaviour
         foreach (var item in cardsControllerModel.WatchedList)
         {
             MovieCardPresenter likeCard;
-            likeCard = Instantiate(btnCardLike, Vector3.zero, Quaternion.identity, PanelCardsWatched);
+            likeCard = Instantiate(btnCardWatched, Vector3.zero, Quaternion.identity, PanelCardsWatched);
             likeCard.Init(item);
             cardListWatch.Add(likeCard);
-            //likeCard.OnButtonDeleteLikeClick += cardsControllerModel.OnButtonClickDeleteLike;
+            likeCard.OnButtonDeleteWatchClick += OnButtonClickDeleteWatch;
         }
     }
 
+    private void OnButtonClickDeleteLikes(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.OnButtonClickDeleteLike(movieCardPresenter.movie);
+        cardListLikes.Remove(movieCardPresenter);
+    }
+
+    private void OnButtonClickDeleteFav(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.OnButtonClickDeleteFav(movieCardPresenter.movie);
+        cardListFav.Remove(movieCardPresenter);
+    }
+
+    private void OnButtonClickDeleteWatch(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.OnButtonClickDeleteWatch(movieCardPresenter.movie);
+        cardListWatch.Remove(movieCardPresenter);
+    }
 
     //private void PlayMovie(string movieURL, int movieId, string movieTitle)
     //{
