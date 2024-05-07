@@ -18,13 +18,8 @@ public class CardControllerPresenter : MonoBehaviour
     [SerializeField] private List<MovieCardPresenter> cardListFav = new List<MovieCardPresenter>();
     [SerializeField] private List<MovieCardPresenter> cardListWatch = new List<MovieCardPresenter>();
 
-    [SerializeField] private VideoPlayer videoPlayer;
-
     [SerializeField] private MovieCardPresenter btnCard;
-
     [SerializeField] private MovieCardPresenter btnCardFav;
-
- 
 
     [SerializeField] private GameObject[] btnFavorit;
     [SerializeField] private GameObject[] btnLike;
@@ -46,11 +41,6 @@ public class CardControllerPresenter : MonoBehaviour
     [SerializeField] private MovieCardPresenter btnCardWatched;
     [SerializeField] private Transform PanelCardsWatched;
 
-    CardsControllerModel CardsControllerModel;
-
-
-
-
     private void Start()
     {
         LoadingCards();
@@ -58,29 +48,6 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.OnInsertFav += InstCardsFav;
         cardsControllerModel.OnInsertWatch += InstCardsWatch;
         cardsControllerModel.OnInsertAllMovies += LoadingCards;
-
-        //cardsControllerModel.OnInsertLikes += InstCardsLikes;
-        //cardsControllerModel.OnInsertFav += InstCardsFav;
-        //cardsControllerModel.OnInsertWatch += InstCardsWatch;
-
-        //foreach (var item in cardsControllerModel.MovieList)
-        //{
-        //    MovieCardPresenter movieCard ;
-        //    movieCard = Instantiate(btnCard, Vector3.zero, Quaternion.identity, PanelCards);
-        //    movieCard.Init(item);
-        //    cardListMovies.Add(movieCard);
-
-        //    movieCard.OnButtonFavorClick += AddToFavorites;
-
-        //    movieCard.OnButtonLikeClick += AddToLikes;
-        //}
-
-
-        //if (cardButton != null)
-        //{
-        //    cardButton.onClick.AddListener(() => PlayMovie(movieURL, movieId, movieTitle));
-        //    cardButton.onClick.AddListener(() => AddToWatched(movieId, movieTitle));
-        //}
     }
 
     private void AddToLikes(MovieCardPresenter movieCardPresenter)
@@ -95,6 +62,11 @@ public class CardControllerPresenter : MonoBehaviour
     private void AddTWatched(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.AddTWatched(movieCardPresenter.movie);
+    }
+
+    private void PlayMovies(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.PlayMovie(movieCardPresenter.movie);
     }
 
     public void LoadingCards()
@@ -113,6 +85,7 @@ public class CardControllerPresenter : MonoBehaviour
             movieCard.OnButtonFavorClick += AddToFavorites;
             movieCard.OnButtonLikeClick += AddToLikes;
             movieCard.OnButtonWatchClick += AddTWatched;
+            movieCard.OnButtonWatchClick += PlayMovies;
         }
     }
 

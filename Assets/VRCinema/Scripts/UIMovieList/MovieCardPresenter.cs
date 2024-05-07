@@ -26,6 +26,7 @@ public class MovieCardPresenter : MonoBehaviour
     public event Action <MovieCardPresenter> OnButtonFavorClick;
     public event Action <MovieCardPresenter> OnButtonLikeClick;
     public event Action <MovieCardPresenter> OnButtonWatchClick;
+    //public event Action <MovieCardPresenter> OnButtonPlayMovieClick;
 
     public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
     public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
@@ -53,7 +54,10 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnPosterMovie.onClick.AddListener(ButtonWatchClick);
         }
-
+        //if (btnPosterMovie != null)
+        //{
+        //    btnPosterMovie.onClick.AddListener(ButtonWatchClick);
+        //}
 
         if (btnDeleteLike != null)
         {
@@ -102,6 +106,11 @@ public class MovieCardPresenter : MonoBehaviour
     {
         OnButtonWatchClick?.Invoke(this);
     }
+
+    //public void ButtonPlayMovieClick()
+    //{
+    //    OnButtonPlayMovieClick?.Invoke(this);
+    //}
 
 
 

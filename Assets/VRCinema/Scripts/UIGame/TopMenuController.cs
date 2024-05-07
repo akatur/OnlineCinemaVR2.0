@@ -20,7 +20,7 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private GameObject UIWatchedList;
     [SerializeField] private GameObject UIProfile;
 
-    public event Action<MovieCards> OnButtonLikeClick;
+    //public event Action<MovieCards> OnButtonLikeClick;
 
     private GameObject activeWindow = null;
 
@@ -50,14 +50,9 @@ public class TopMenuController : MonoBehaviour
         btnWatched.onClick.AddListener(StateWindowUIWatchedList);
         btnWatched.onClick.AddListener(cardsControllerModel.invokeWatchCards);
 
-
         btnProfile.onClick.AddListener(StateWindowUIProfile);
 
-        
         btnBack.onClick.AddListener(Back);
-        //btnBack.onClick.AddListener(cardsControllerModel.GetMovie);
-
-
     }
 
     private void Back()
@@ -118,7 +113,6 @@ public class TopMenuController : MonoBehaviour
             btnFavourite.interactable = false;
             btnWatched.interactable = false;
         }
-
     }
 
     private void ToggleWindow(GameObject window)
@@ -142,11 +136,9 @@ public class TopMenuController : MonoBehaviour
             btnWatched.interactable = false;
             return;
         }
-
         window.SetActive(true);
         activeWindow = window;
     }
-
 
     private void OnLogUserButtonClick()
     {

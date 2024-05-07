@@ -17,6 +17,7 @@ using System.Linq;
 
 public class CardsControllerModel : MonoBehaviour
 {
+    [SerializeField] private VideoPlayer videoPlayer;
 
     public event Action OnInsertAllMovies;
     public event Action OnInsertLikes;
@@ -45,8 +46,6 @@ public class CardsControllerModel : MonoBehaviour
         }
     }
 
-    private VideoPlayer videoPlayer;
-
     private void Start()
     {
         GetMovie();
@@ -67,17 +66,16 @@ public class CardsControllerModel : MonoBehaviour
         if (www.result == UnityWebRequest.Result.Success)
         {
             string json = www.downloadHandler.text;
-            
+
             MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
             MovieList.Clear();
             foreach (var movie in movies)
             {
                 string movieId = movie.movieId;
-                //if (MovieList.Any(existingMovie => existingMovie.movieId == movieId))
-                //{
-                //    continue;
-                //}
-
+                if (MovieList.Any(existingMovie => existingMovie.movieId == movieId))
+                {
+                    continue;
+                }
                 string movieTitle = movie.movieTitle;
                 string genre = movie.genre;
                 string movieURL = movie.movieURL;
@@ -94,7 +92,7 @@ public class CardsControllerModel : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Ошибка getMOV " + www.error);
+            Debug.LogError("Ошибка получения данных фильма " + www.error);
         }
 
         www.Dispose();
@@ -134,10 +132,10 @@ public class CardsControllerModel : MonoBehaviour
         foreach (var movie in movies)
         {
             string movieId = movie.movieId;
-            //if (LikeList.Any(existingMovie => existingMovie.movieId == movieId))
-            //{
-            //    continue; 
-            //}
+            if (LikeList.Any(existingMovie => existingMovie.movieId == movieId))
+            {
+                continue;
+            }
             string movieTitle = movie.movieTitle;
             string genre = movie.genre;
             string movieURL = movie.movieURL;
@@ -151,7 +149,6 @@ public class CardsControllerModel : MonoBehaviour
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
             MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
             LikeList.Add(movieCard);
-            Debug.Log(movieCard);
         }
         OnInsertLikes?.Invoke();
     }
@@ -201,12 +198,11 @@ public class CardsControllerModel : MonoBehaviour
             string likeId = movie.likeId;
             string favoriteId = movie.favoriteId;
             string watchedId = movie.watchedId;
-            
+
 
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
             MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
             FavouritesList.Add(movieCard);
-            Debug.Log(movieCard);
         }
         OnInsertFav?.Invoke();
     }
@@ -268,7 +264,7 @@ public class CardsControllerModel : MonoBehaviour
 
     public void AddToLike(MovieCards movie)
     {
-        StartCoroutine(AddToLikeCoroutine(Convert.ToInt32( movie.movieId),movie.movieTitle));
+        StartCoroutine(AddToLikeCoroutine(Convert.ToInt32(movie.movieId), movie.movieTitle));
     }
 
     private IEnumerator AddToLikeCoroutine(int movieId, string movieTitle)
@@ -459,358 +455,10 @@ public class CardsControllerModel : MonoBehaviour
         StopCoroutine(DeleteWatchOnServer(movie));
     }
 
-
-
-
-    //private IEnumerator GetLikesFromServer()
-    //{
-    //    string userId = UserInfo.user_id;
-    //    Debug.Log(userId);
-    //    UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/likes?user_id=" + userId);
-
-    //    yield return www.SendWebRequest();
-
-    //    if (www.result == UnityWebRequest.Result.Success)
-    //    {
-    //        string json = www.downloadHandler.text;
-    //        //ParseAndSortData(json);
-    //        MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
-
-    //        foreach (var movie in movies)
-    //        {
-    //            string movieTitle = movie.movieTitle;
-    //            string genre = movie.genre;
-    //            string movieURL = movie.movieURL;
-    //            string urlPhotoName = movie.urlPhotoName;
-    //            string description = movie.discription;
-    //            string movieId = movie.movieId;
-    //            string likeId = movie.likeId;
-    //            string userId = UserInfo.user_id;
-
-    //            Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-    //            MovieCards movieCard = new MovieCards(movieTitle, userId, genre, description, urlPhotoName, movieURL, movieId, likeId);
-    //            LikeList.Add(movieCard);
-    //            Debug.Log(movieCard);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError(www.error);
-    //    }
-    //    //StopCoroutine(GetLikesFromServer());
-    //}
-
-
-    //private IEnumerator GetLikeFromServer()
-    //{
-    //    UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/likes");
-
-    //    yield return www.SendWebRequest();
-
-    //    if (www.result == UnityWebRequest.Result.Success)
-    //    {
-    //        string json = www.downloadHandler.text;
-    //        Debug.Log(json);
-
-    //        MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
-    //        //Debug.Log("kok1");
-    //        //Debug.Log(movies);
-
-    //        foreach (var movie in movies)
-    //        {
-    //            string movieTitle = movie.movieTitle;
-    //            string genre = movie.genre;
-    //            string movieURL = movie.movieURL;
-    //            string urlPhotoName = movie.urlPhotoName;
-    //            string description = movie.discription;
-    //            string movieId = movie.movieId;
-    //            string likeId = movie.likeId;
-    //            string userId = movie.userId;
-    //            //Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-    //            MovieCards movieCard = new MovieCards(movieTitle, userId, genre, description, urlPhotoName, movieURL, movieId, likeId);
-    //            LikeList.Add(movieCard);
-    //            //Debug.Log("kok2");
-    //            Debug.Log(movieCard);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Ошибка getMOV " + www.error);
-    //    }
-
-    //    www.Dispose();
-    //    StopCoroutine(GetLikesFromServer());
-    //}
-
-
-
-    //private void LoadingLikes()
-    //{
-    //    connection = new MySqlConnection(connectionString);
-    //    connection.Open();
-
-    //    string sqlQuery = "SELECT ul.like_id, ul.title, m.genres, m.url_move, m.movie_id, m.movie_photo, m.discription_movie " +
-    //              "FROM user_likes ul " + 
-    //              "INNER JOIN movies m " + 
-    //              "ON ul.movie_id = m.movie_id"; 
-
-    //    MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
-    //    MySqlDataReader reader = cmd.ExecuteReader();
-
-    //    while (reader.Read())
-    //    {
-    //        string movieTitle = reader.GetString("title");
-    //        int likeId = reader.GetInt32("like_id");
-    //        string genre = reader.GetString("genres");
-    //        string movieURL = reader.GetString("url_move");
-    //        string urlPhotoName = reader.GetString("movie_photo");
-    //        string discription = reader.GetString("discription_movie");
-    //        int movieId = reader.GetInt32("movie_id");
-
-    //        Movie likeCard = new Movie(urlPhotoName, genre, discription, movieTitle, movieURL, movieId);
-    //        LikeList.Add(likeCard);
-    //    }
-    //    reader.Close();
-    //    connection.Close();
-    //}
-
-
-    //private void LoadingFavourites()
-    //{
-    //    connection = new MySqlConnection(connectionString);
-    //    connection.Open();
-
-    //    string sqlQuery = "SELECT fav.favorite_id , fav.title, m.genres, m.url_move, m.movie_id, m.movie_photo, m.discription_movie " +
-    //              "FROM favourites fav " +
-    //              "INNER JOIN movies m " +
-    //              "ON fav.movie_id = m.movie_id";
-
-
-
-    //    MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
-    //    MySqlDataReader reader = cmd.ExecuteReader();
-
-    //    while (reader.Read())
-    //    {
-    //        string movieTitle = reader.GetString("title");
-    //        int likeId = reader.GetInt32("favorite_id");
-    //        string genre = reader.GetString("genres");
-    //        string movieURL = reader.GetString("url_move");
-    //        string urlPhotoName = reader.GetString("movie_photo");
-    //        string discription = reader.GetString("discription_movie");
-    //        int movieId = reader.GetInt32("movie_id");
-
-    //        Movie likeCard = new Movie(urlPhotoName, genre, discription, movieTitle, movieURL, movieId);
-    //        FavouritesList.Add(likeCard);
-    //    }
-    //    reader.Close();
-    //    connection.Close();
-    //}
-
-    //private void LoadingWatched()
-    //{
-    //    connection = new MySqlConnection(connectionString);
-    //    connection.Open();
-    //    string sqlQuery = "SELECT wat.watched_id , wat.title, m.genres, m.url_move, m.movie_id, m.movie_photo, m.discription_movie " +
-    //              "FROM watched_movies wat " +
-    //              "INNER JOIN movies m " +
-    //              "ON wat.movie_id = m.movie_id";
-
-    //    MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
-    //    MySqlDataReader reader = cmd.ExecuteReader();
-
-    //    while (reader.Read())
-    //    {
-    //        string movieTitle = reader.GetString("title");
-    //        int likeId = reader.GetInt32("favorite_id");
-    //        string genre = reader.GetString("genres");
-    //        string movieURL = reader.GetString("url_move");
-    //        string urlPhotoName = reader.GetString("movie_photo");
-    //        string discription = reader.GetString("discription_movie");
-    //        int movieId = reader.GetInt32("movie_id");
-
-    //        Movie likeCard = new Movie(urlPhotoName, genre, discription, movieTitle, movieURL, movieId);
-    //        WatchedList.Add(likeCard);
-    //    }
-    //    reader.Close();
-    //    connection.Close();
-    //}
-
-    //private void PlayMovie(string movieURL, int movieId, string movieTitle)
-    //{
-    //    if (videoPlayer == null)
-    //    {
-    //        videoPlayer = GetComponent<VideoPlayer>();
-    //        if (videoPlayer == null)
-    //        {
-    //            Debug.LogError("Видеоплеер не найден");
-    //            return;
-    //        }
-    //    }
-    //    videoPlayer.url = movieURL;
-    //    videoPlayer.Play();
-    //}
-
-    //public void AddToFavorites(Movie movie)
-    //{
-    //    if (connection.State != ConnectionState.Open)
-    //    {
-    //        connection.Open();
-    //    }
-    //    string query = $"INSERT INTO favourites (movie_id, user_id, title) VALUES (@movieId, @userId, @title)";
-
-    //    MySqlCommand command = new MySqlCommand(query, connection);
-
-    //    command.Parameters.AddWithValue("@movieId", movie.movieId);
-    //    command.Parameters.AddWithValue("@userId", UserInfo.user_id);
-    //    command.Parameters.AddWithValue("@title", movie.movieTitle);
-    //    try
-    //    {
-    //        command.ExecuteNonQuery();
-    //        Debug.Log("Фильм добавлен в избранное.");
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Debug.LogError("Произошла ошибка при добавлении фильма в избранное: " + ex);
-    //    }
-    //}
-
-    //public void AddToLike(Movie movie)
-    //{
-    //    if (connection.State != ConnectionState.Open)
-    //    {
-    //        connection.Open();
-    //    }
-
-    //    string query = $"INSERT INTO `user_likes` (movie_id, user_id, title) VALUES (@movieId, @userId, @title)";
-    //    MySqlCommand command = new MySqlCommand(query, connection);
-
-    //    command.Parameters.AddWithValue("@movieId", movie.movieId);
-    //    command.Parameters.AddWithValue("@userId", UserInfo.user_id);
-    //    command.Parameters.AddWithValue("@title", movie.movieTitle);
-
-    //    try
-    //    {
-    //        command.ExecuteNonQuery();
-    //        Debug.Log("Фильм добавлен в like.");
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Debug.LogError("Произошла ошибка при добавлении фильма в like: " + ex);
-    //    }
-
-    //}
-
-    //public void AddToWatched(int movieId, string movieTitle)
-    //{
-
-    //    if (connection.State != ConnectionState.Open)
-    //    {
-    //        connection.Open();
-    //    }
-
-    //    string query = $"INSERT INTO `watched_movies` (movie_id, user_id, title) VALUES (@movieId, @userId, @title)";
-    //    MySqlCommand command = new MySqlCommand(query, connection);
-
-    //    command.Parameters.AddWithValue("@movieId", movieId);
-    //    command.Parameters.AddWithValue("@userId", UserInfo.user_id);
-    //    command.Parameters.AddWithValue("@title", movieTitle);
-
-    //    try
-    //    {
-    //        command.ExecuteNonQuery();
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Debug.LogError("ошибка при добавлении фильма в History: " + ex);
-    //    }
-    //}
+    public void PlayMovie(MovieCards movie)
+    {
+        videoPlayer.url = movie.movieURL;
+        int watchedId = Convert.ToInt32(movie.movieId);
+        videoPlayer.Play();
+    }
 }
-
-
-//public class MovieData
-//{
-//    [JsonProperty("movie_photo")]
-//    public string urlPhotoName;
-//    [JsonProperty("genre")]
-//    public string genre;
-//    [JsonProperty("movie_title")]
-//    public string movieTitle;
-//    [JsonProperty("movieURL")]
-//    public string movieURL;
-//    [JsonProperty("discription")]
-//    public string discription;
-//    [JsonProperty("movie_id")]
-//    public int movieId;
-
-//    public string ToJson()
-//    {
-//        return JsonUtility.ToJson(this);
-//    }
-//    public static MovieData FromJson(string json)
-//    {
-//        return JsonUtility.FromJson<MovieData>(json);
-//    }
-//}
-//public string ToJson()
-//{
-//    return JsonUtility.ToJson(this);
-//}
-//public static Movie FromJson(string json)
-//{
-//    return JsonUtility.FromJson<Movie>(json);
-//}
-
-
-
-
-
-//private void LoadingCards()
-//{
-//    connection = new MySqlConnection(connectionString);
-//    connection.Open();
-
-//    string sqlQuery = "SELECT m.title,m.genres, m.url_move, m.movie_id, m.movie_photo,discription_movie " +
-//                          "FROM movies m ";
-
-//    MySqlCommand cmd = new MySqlCommand(sqlQuery, connection);
-//    MySqlDataReader reader = cmd.ExecuteReader();
-
-//    while (reader.Read())
-//    {
-//            string movieTitle = reader.GetString("title");
-//            string genre = reader.GetString("genres");
-//            string movieURL = reader.GetString("url_move");
-//            string urlPhotoName = reader.GetString("movie_photo");
-//            string discription = reader.GetString("discription_movie");
-//            int movieId = reader.GetInt32("movie_id");
-
-//            Movie movieCard = new Movie(urlPhotoName,  genre, discription, movieTitle, movieURL,  movieId  );
-//            MovieList.Add(movieCard);
-//    }
-//    reader.Close();
-//    connection.Close();
-//}
-
-//[System.Serializable]
-//public class MovieData
-//{
-//    [JsonProperty("movie_id")]
-//    public int movieId;
-//    [JsonProperty("movie_title")]
-//    public string movieTitle;
-//    [JsonProperty("movie_url")]
-//    public string movieURL;
-//    [JsonProperty("genre_name")]
-//    public string genreName;
-
-//    public string ToJson()
-//    {
-//        return JsonUtility.ToJson(this);
-//    }
-//    public static MovieData FromJson(string json)
-//    {
-//        return JsonUtility.FromJson<MovieData>(json);
-//    }
-//}
-

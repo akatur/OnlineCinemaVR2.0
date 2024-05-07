@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class menuUiControll : MonoBehaviour
 {
-    public GameObject UISrollCards;
-    public GameObject TopTable;
-    public GameObject UIAddMovie;
+    [SerializeField] private GameObject UISrollCards;
+    [SerializeField] private GameObject TopTable;
+    [SerializeField] private GameObject UIAddMovie;
+    [SerializeField] private  GameObject UIProfile;
+    [SerializeField] private  GameObject UIFav;
+    [SerializeField] private  GameObject UILike;
+    [SerializeField] private  GameObject UIWatch;
 
     public bool isOpenedOne;
     public bool isOpenedTwo;
@@ -37,6 +41,11 @@ public class menuUiControll : MonoBehaviour
             {
                 UISrollCards.SetActive(false);
                 TopTable.SetActive(false);
+                UIProfile.SetActive(false);
+                UIFav.SetActive(false);
+                UILike.SetActive(false);
+                UIWatch.SetActive(false);
+
                 
             }
         }
