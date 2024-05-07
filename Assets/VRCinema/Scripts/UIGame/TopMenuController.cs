@@ -55,7 +55,7 @@ public class TopMenuController : MonoBehaviour
 
         
         btnBack.onClick.AddListener(Back);
-        btnBack.onClick.AddListener(cardsControllerModel.GetMovie);
+        //btnBack.onClick.AddListener(cardsControllerModel.GetMovie);
 
 
     }

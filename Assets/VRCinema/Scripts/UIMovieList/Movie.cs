@@ -27,8 +27,10 @@ public class MovieCards
     public string likeId;
     [JsonProperty("user_id")]
     public string userId;
+    [JsonProperty("favorite_id")]
+    public string favoriteId;
 
-    public MovieCards(string movieTitle, string userId, string genre, string discription,string urlPhotoName,  string movieURL, string movieId, string likeId)
+    public MovieCards(string movieTitle, string userId, string favoriteId,string genre, string discription,string urlPhotoName,  string movieURL, string movieId, string likeId)
     {
         this.movieTitle = movieTitle;
         this.urlPhotoName = urlPhotoName;
@@ -38,6 +40,7 @@ public class MovieCards
         this.movieId = movieId;
         this.likeId = likeId;
         this.userId = userId;
+        this.favoriteId = favoriteId;
     }
 
     public string ToJson()

@@ -44,12 +44,22 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnLike.onClick.AddListener(ButtonLikeClick);
         }
+        if (btnFavorit != null)
+        {
+            btnFavorit.onClick.AddListener(ButtonFavClick);
+        }
+
+
         if (btnDeleteLike != null)
         {
             btnDeleteLike.onClick.AddListener(ButtonDeleteLikeClick);
         }
+        if (btnDeleteFavorit != null)
+        {
+            btnDeleteFavorit.onClick.AddListener(ButtonDeleteFavClick);
+        }
 
-        
+
 
         //StartCoroutine(LoadImageFromURL(movie.urlPhotoName));
     }
@@ -59,6 +69,13 @@ public class MovieCardPresenter : MonoBehaviour
         OnButtonDeleteLikeClick?.Invoke(this);
         Destroy(this.gameObject);
     }
+
+    public void ButtonDeleteFavClick()
+    {
+        OnButtonDeleteFavorClick?.Invoke(this);
+        Destroy(this.gameObject);
+    }
+
 
     public void ButtonFavClick()
     {

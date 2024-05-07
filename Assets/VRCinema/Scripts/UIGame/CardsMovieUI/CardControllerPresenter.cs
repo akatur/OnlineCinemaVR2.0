@@ -91,7 +91,7 @@ public class CardControllerPresenter : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-       
+        cardListMovies.Clear();
         foreach (var item in cardsControllerModel.MovieList)
         {
             MovieCardPresenter movieCard;
@@ -108,13 +108,11 @@ public class CardControllerPresenter : MonoBehaviour
     private void AddToLikes(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.AddToLike(movieCardPresenter.movie);
-        cardListLikes.Add(movieCardPresenter);
     }
 
     private void AddToFavorites(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.AddToFavorites(movieCardPresenter.movie);
-        cardListFav.Add(movieCardPresenter);
     }
 
 
@@ -135,15 +133,6 @@ public class CardControllerPresenter : MonoBehaviour
         }
     }
 
-    private void OnButtonClickDeleteLikes(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.OnButtonClickDeleteLike(movieCardPresenter.movie);
-        cardListLikes.Remove(movieCardPresenter);
-    }
-
-
-
-
     private void InstCardsFav()
     {
         foreach (var item in cardListFav)
@@ -154,14 +143,29 @@ public class CardControllerPresenter : MonoBehaviour
         foreach (var item in cardsControllerModel.FavouritesList)
         {
             MovieCardPresenter likeCard;
-            likeCard = Instantiate(btnCardLike, Vector3.zero, Quaternion.identity, PanelCardsFav);
+            likeCard = Instantiate(btnCardFav, Vector3.zero, Quaternion.identity, PanelCardsFav);
             likeCard.Init(item);
             cardListFav.Add(likeCard);
-
-            //likeCard.OnButtonDeleteLikeClick += cardsControllerModel.OnButtonClickDeleteLike;
+            likeCard.OnButtonDeleteFavorClick += OnButtonClickDeleteFav;
+            
 
         }
     }
+
+    private void OnButtonClickDeleteLikes(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.OnButtonClickDeleteLike(movieCardPresenter.movie);
+        cardListLikes.Remove(movieCardPresenter);
+    }
+
+
+    private void OnButtonClickDeleteFav(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.OnButtonClickDeleteFav(movieCardPresenter.movie);
+        cardListFav.Remove(movieCardPresenter);
+    }
+
+  
 
     private void InstCardsWatch()
     {
