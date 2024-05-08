@@ -5,6 +5,7 @@ using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class TopMenuController : MonoBehaviour
 {
     [SerializeField] private Button btnLike;
@@ -25,10 +26,10 @@ public class TopMenuController : MonoBehaviour
     private GameObject activeWindow = null;
 
     [SerializeField] private CardsControllerModel cardsControllerModel;
+    [SerializeField] private ProfileModel profileModel;
+
     CardControllerPresenter cardsControllerPresenter;
 
-
-   
     private void Awake()
     {
         btnLike.interactable = false;
@@ -51,6 +52,7 @@ public class TopMenuController : MonoBehaviour
         btnWatched.onClick.AddListener(cardsControllerModel.invokeWatchCards);
 
         btnProfile.onClick.AddListener(StateWindowUIProfile);
+        btnProfile.onClick.AddListener(profileModel.invokeProfile);
 
         btnBack.onClick.AddListener(Back);
     }

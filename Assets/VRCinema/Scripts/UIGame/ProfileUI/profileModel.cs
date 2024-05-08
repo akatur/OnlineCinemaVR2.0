@@ -15,7 +15,7 @@ using UnityEngine.Networking;
 using UnityEngine.Analytics;
 using System.Linq;
 
-public class profileModel : MonoBehaviour
+public class ProfileModel : MonoBehaviour
 {
     public List<Profile> ProfileList = new();
 
@@ -27,7 +27,7 @@ public class profileModel : MonoBehaviour
     {
         string userId = UserInfo.user_id;
         Debug.Log(userId);
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/likes?user_id=" + userId);
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/getdataprofile?user_id=" + userId);
 
         StartCoroutine(ProcessRequest(www));
     }

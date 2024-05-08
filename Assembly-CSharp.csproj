@@ -62,7 +62,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
-    <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profileModel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profileUIController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="Assets\VRCinema\Scripts\UIGame\CardsMovieUI\CardControllerPresenter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\MenuUiControll.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\VRCinema\Scripts\movePlayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\UIAuth\AuthPresenter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIMovieList\Movie.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
@@ -104,15 +105,15 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIMovieList\LikesCardsPresenter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\ProfileModel.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profileControllerPresenter.cs" />
-    <Compile Include="Assets\VRCinema\Scripts\menuUiControll.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\CardsMovieUI\LikeControllerPresenter.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIAuth\authModel.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profilePresenter.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\MenuController.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIMovieList\MovieCardPresenter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-    <Compile Include="Assets\VRCinema\Scripts\UIAuth\authPresenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -1,7 +1,7 @@
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
-public class menuUiControll : MonoBehaviour
+public class MenuUiControll : MonoBehaviour
 {
     [SerializeField] private GameObject UISrollCards;
     [SerializeField] private GameObject TopTable;
@@ -11,8 +11,12 @@ public class menuUiControll : MonoBehaviour
     [SerializeField] private  GameObject UILike;
     [SerializeField] private  GameObject UIWatch;
 
+    [SerializeField] private  GameObject UIMenu;
+    [SerializeField] private  GameObject UISettings;
+
     public bool isOpenedOne;
     public bool isOpenedTwo;
+    public bool isOpenedTree;
 
     [SerializeField] private authModel authModel;
 
@@ -35,7 +39,6 @@ public class menuUiControll : MonoBehaviour
             {
                 UISrollCards.SetActive(true);
                 TopTable.SetActive(true);
-                
             }
             else
             {
@@ -45,8 +48,28 @@ public class menuUiControll : MonoBehaviour
                 UIFav.SetActive(false);
                 UILike.SetActive(false);
                 UIWatch.SetActive(false);
+            }
+        }
 
-                
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isOpenedTree = !isOpenedTree;
+
+            if (isOpenedTree)
+            {
+
+                UIMenu.SetActive(true);
+                UISrollCards.SetActive(false);
+                TopTable.SetActive(false);
+                UIProfile.SetActive(false);
+                UIFav.SetActive(false);
+                UILike.SetActive(false);
+                UIWatch.SetActive(false);
+            }
+            else
+            {
+                UIMenu.SetActive(false);
+                UISettings.SetActive(false);
             }
         }
 

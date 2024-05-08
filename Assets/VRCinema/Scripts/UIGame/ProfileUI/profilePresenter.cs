@@ -12,7 +12,7 @@ public class profilePresenter : MonoBehaviour
 
     public event Action<profilePresenter> OnButtonProfileClick;
 
-    Profile profile;
+    public Profile profile;
     public void Init(Profile profile)
     {
         nickName.text = profile.username;

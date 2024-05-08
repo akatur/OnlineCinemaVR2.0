@@ -50,8 +50,6 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.OnInsertAllMovies += LoadingCards;
     }
 
-    
-
     public void LoadingCards()
     {
         foreach (var item in cardListMovies)
