@@ -40,7 +40,10 @@ public class MovieCardPresenter : MonoBehaviour
     public void Init(MovieCards movie)
     {
         movieTitle.text = movie.movieTitle;
+        
         this.movie = movie;
+
+        StartCoroutine(CardsControllerModel.LoadImageFromURL(urlPhotoName, PosterMovie));
 
         if (btnLike != null)
         {
