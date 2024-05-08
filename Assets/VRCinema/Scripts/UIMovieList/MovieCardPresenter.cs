@@ -71,8 +71,6 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnDeleteWatch.onClick.AddListener(ButtonDeleteWatchClick);
         }
-
-        //StartCoroutine(LoadImageFromURL(movie.urlPhotoName));
     }
 
     public void ButtonDeleteLikeClick()
@@ -93,25 +91,20 @@ public class MovieCardPresenter : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-
     public void ButtonFavClick()
     {
         OnButtonFavorClick?.Invoke(this);
     } 
+
     public void ButtonLikeClick()
     {
         OnButtonLikeClick?.Invoke(this);
     }
+
     public void ButtonWatchClick()
     {
         OnButtonWatchClick?.Invoke(this);
     }
-
-    //public void ButtonPlayMovieClick()
-    //{
-    //    OnButtonPlayMovieClick?.Invoke(this);
-    //}
-
 
 
     //IEnumerator LoadImageFromURL(string urlPhotoName)

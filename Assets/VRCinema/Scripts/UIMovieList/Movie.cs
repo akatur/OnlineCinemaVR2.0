@@ -1,12 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Video;
 using Newtonsoft.Json;
-using UnityEngine.Networking;
-using static CardsControllerModel;
 
 [System.Serializable]
 public class MovieCards 

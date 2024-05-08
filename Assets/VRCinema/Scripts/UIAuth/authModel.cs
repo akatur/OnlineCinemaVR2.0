@@ -32,11 +32,11 @@ public static class UserInfo
     public static string currentPassword;
 }
 
-public class UserDat
-{
-    public static string userId;
+//public class UserDat
+//{
+//    public static string userId;
 
-}
+//}
 
 [Serializable]
 public class ResponseData
@@ -142,10 +142,10 @@ public class authModel : MonoBehaviour
                 if (response.Contains("user_id"))
                 {
                     var responseData = JsonUtility.FromJson<ResponseData>(response);
+
                     UserInfo.currentLogin = login;
-                    //Debug.Log(login);
                     UserInfo.user_id = responseData.user_id.ToString();
-                    //Debug.Log("USES"+UserInfo.user_id);
+
                     yield return true;
                 }
                 else

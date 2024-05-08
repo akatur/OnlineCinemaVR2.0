@@ -62,6 +62,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profileModel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profileUIController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -97,15 +98,18 @@
     <Compile Include="Assets\VRCinema\Scripts\UIMovieList\Movie.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\Profile.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\CardsMovieUI\CardsControllerModel.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\TopMenuController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIMovieList\LikesCardsPresenter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profileControllerPresenter.cs" />
     <Compile Include="Assets\VRCinema\Scripts\menuUiControll.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIGame\CardsMovieUI\LikeControllerPresenter.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIAuth\authModel.cs" />
+    <Compile Include="Assets\VRCinema\Scripts\UIGame\ProfileUI\profilePresenter.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIMovieList\MovieCardPresenter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\VRCinema\Scripts\UIAuth\authPresenter.cs" />

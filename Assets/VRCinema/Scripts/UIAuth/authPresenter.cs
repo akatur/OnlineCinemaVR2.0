@@ -63,7 +63,9 @@ public class AuthPresenter : MonoBehaviour
         btnReg.onClick.AddListener(Registation);
 
         LOGUserButton.onClick.AddListener(SendDataAuth);
+
         REGUserButton.onClick.AddListener(SendDataReg);
+
         MovieAddButton.onClick.AddListener(SendDataNewMovie);
     }
 

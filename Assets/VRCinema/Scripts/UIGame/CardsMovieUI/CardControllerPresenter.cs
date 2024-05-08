@@ -50,24 +50,7 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.OnInsertAllMovies += LoadingCards;
     }
 
-    private void AddToLikes(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.AddToLike(movieCardPresenter.movie);
-    }
-
-    private void AddToFavorites(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.AddToFavorites(movieCardPresenter.movie);
-    }
-    private void AddTWatched(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.AddTWatched(movieCardPresenter.movie);
-    }
-
-    private void PlayMovies(MovieCardPresenter movieCardPresenter)
-    {
-        cardsControllerModel.PlayMovie(movieCardPresenter.movie);
-    }
+    
 
     public void LoadingCards()
     {
@@ -138,6 +121,25 @@ public class CardControllerPresenter : MonoBehaviour
             cardListWatch.Add(likeCard);
             likeCard.OnButtonDeleteWatchClick += OnButtonClickDeleteWatch;
         }
+    }
+
+    private void AddToLikes(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddToLike(movieCardPresenter.movie);
+    }
+
+    private void AddToFavorites(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddToFavorites(movieCardPresenter.movie);
+    }
+    private void AddTWatched(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.AddTWatched(movieCardPresenter.movie);
+    }
+
+    private void PlayMovies(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.PlayMovie(movieCardPresenter.movie);
     }
 
     private void OnButtonClickDeleteLikes(MovieCardPresenter movieCardPresenter)
