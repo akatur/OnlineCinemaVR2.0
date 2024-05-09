@@ -13,7 +13,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Button btnNext;
     [SerializeField] private Button btnBack;
 
-    private GameObject activeWindow = null;
+    //private GameObject activeWindow = null;
 
 
     private void Awake()
