@@ -12,6 +12,8 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private Button btnFavourite;
     [SerializeField] private Button btnWatched;
     [SerializeField] private Button btnProfile;
+    //[SerializeField] private Button btnPanoram;
+
 
     [SerializeField] private Button btnBack;
 
@@ -20,6 +22,7 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private GameObject UIFavouritesList;
     [SerializeField] private GameObject UIWatchedList;
     [SerializeField] private GameObject UIProfile;
+    
 
     //public event Action<MovieCards> OnButtonLikeClick;
 
@@ -41,6 +44,7 @@ public class TopMenuController : MonoBehaviour
         btnWatched.gameObject.SetActive(false);
         btnLike.gameObject.SetActive(false);
         btnBack.gameObject.SetActive(false);
+        
 
         btnLike.onClick.AddListener(StateWindowUILikes);
         btnLike.onClick.AddListener(cardsControllerModel.invokeLikesCards);
@@ -53,6 +57,8 @@ public class TopMenuController : MonoBehaviour
 
         btnProfile.onClick.AddListener(StateWindowUIProfile);
         btnProfile.onClick.AddListener(profileModel.invokeProfile);
+
+        //btnPanoram.onClick.AddListener(StateWindowUIPanoram);
 
         btnBack.onClick.AddListener(Back);
     }
@@ -69,6 +75,8 @@ public class TopMenuController : MonoBehaviour
         UIFavouritesList.SetActive(false);
         UIProfile.SetActive(false);
     }
+
+    
 
     private void StateWindowUILikes()
     {
@@ -131,6 +139,7 @@ public class TopMenuController : MonoBehaviour
 
         if (window == UIScrollCards)
         {
+            
             btnBack.interactable = false;
             btnLike.interactable = false;
             btnBack.interactable = false;

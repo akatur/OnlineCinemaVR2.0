@@ -17,40 +17,69 @@ public class MovieCardPresenter : MonoBehaviour
     [SerializeField] private Button btnDeleteFavorit;
     [SerializeField] private Button btnDeleteWatch;
 
+    [SerializeField] private Button btnToPanoramCard;
+
     public Text movieTitle;
+    public Text movieGenre;
+    public Text movieDiscription;
     public Image PosterMovie;
 
     public string urlPhotoName;
+
+    
 
     public MovieCards movie;
     public event Action <MovieCardPresenter> OnButtonFavorClick;
     public event Action <MovieCardPresenter> OnButtonLikeClick;
     public event Action <MovieCardPresenter> OnButtonWatchClick;
+
+    public event Action <MovieCardPresenter> OnButtonToPanoramClick;
+
     //public event Action <MovieCardPresenter> OnButtonPlayMovieClick;
 
     public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
     public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
     public event Action <MovieCardPresenter> OnButtonDeleteWatchClick;
 
-
     //public event Action <MovieCardPresenter> OnButtonSelectMovie;
-
-
 
     public void Init(MovieCards movie)
     {
         movieTitle.text = movie.movieTitle;
+
+        if (movieGenre != null )
+        {
+            movieGenre.text = movie.genre;
+        }
+        if (movieDiscription != null)
+        {
+            movieDiscription.text = movie.discription;
+        }
+
+        //movieGenre.text = movie.genre;
+        //movieDiscription.text = movie.discription;
         urlPhotoName = movie.urlPhotoName;
         this.movie = movie;
 
-
-        Debug.Log("PosterImage"+urlPhotoName);
+            Debug.Log("PosterImage"+urlPhotoName);
         StartCoroutine(CardsControllerModel.LoadImageFromURL(urlPhotoName, PosterMovie));
+
+        if (btnToPanoramCard != null)
+        {
+            btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
+            
+        }
+
+
 
         if (btnLike != null)
         {
             btnLike.onClick.AddListener(ButtonLikeClick);
         }
+
+
+
+
         if (btnFavorit != null)
         {
             btnFavorit.onClick.AddListener(ButtonFavClick);
@@ -77,7 +106,10 @@ public class MovieCardPresenter : MonoBehaviour
             btnDeleteWatch.onClick.AddListener(ButtonDeleteWatchClick);
         }
     }
-
+    public void ButtonToPanoramClick()
+    {
+        OnButtonToPanoramClick?.Invoke(this);
+    }
     public void ButtonDeleteLikeClick()
     {
         OnButtonDeleteLikeClick?.Invoke(this);
@@ -110,6 +142,9 @@ public class MovieCardPresenter : MonoBehaviour
     {
         OnButtonWatchClick?.Invoke(this);
     }
+
+   
+
 
 
     //IEnumerator LoadImageFromURL(string urlPhotoName)

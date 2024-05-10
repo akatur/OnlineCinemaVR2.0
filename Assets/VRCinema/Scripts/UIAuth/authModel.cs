@@ -1,26 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using MySql.Data;
 using MySql.Data.MySqlClient;
-using UnityEngine.UI;
 using System;
-using System.Data;
-using UnityEngine.Video;
-using UnityEditor.MemoryProfiler;
-using UnityEditor;
-using Renci.SshNet;
-using Org.BouncyCastle.Bcpg;
-using Org.BouncyCastle.Asn1.Ocsp;
 using UnityEngine.Networking;
-using UnityEditor.Search;
-using UnityEngine.Analytics;
-
-
-
-
-
-
 
 public static class ConnectionInfo
 {
@@ -46,15 +28,9 @@ public class ResponseData
 
 }
 
-
 public class authModel : MonoBehaviour
 {
-
-
     [SerializeField]  public movePlayer movePlayer;
-
-
-
 
     public event Action OnEnableCameraControl;
     public event Action OnDisableCameraControl;
@@ -132,20 +108,16 @@ public class authModel : MonoBehaviour
         }
         else
         {
-            //Debug.Log("DAT---"+UserDat.userId);
-            //Debug.Log("info---"+UserInfo.user_id);
             StartCoroutine(Authenticate(login, password));
             Debug.Log("Данные приняты");
-            
         }
     }
 
-
-
     private IEnumerator Authenticate(string login, string password)
     {
-        string url = "http://localhost:3000/login";
+        
 
+        string url = "http://localhost:3000/login";
         WWWForm form = new WWWForm();
         form.AddField("login", login);
         form.AddField("password", password);
@@ -163,7 +135,6 @@ public class authModel : MonoBehaviour
 
                     UserInfo.currentLogin = login;
                     UserInfo.user_id = responseData.user_id.ToString();
-                    
 
                     UIAuth.SetActive(false);
                     UIGame.SetActive(true);

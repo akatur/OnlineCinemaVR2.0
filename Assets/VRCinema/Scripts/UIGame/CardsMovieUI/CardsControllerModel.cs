@@ -23,11 +23,13 @@ public class CardsControllerModel : MonoBehaviour
     public event Action OnInsertLikes;
     public event Action OnInsertFav;
     public event Action OnInsertWatch;
+    public event Action OnInsertToPanoram;
 
     public List<MovieCards> MovieList = new();
     public List<MovieCards> LikeList = new();
     public List<MovieCards> FavouritesList = new();
     public List<MovieCards> WatchedList = new();
+    public List<MovieCards> ToPanoram = new();
 
     private HashSet<string> uniqueTitlesInt = new HashSet<string>();
 
@@ -118,7 +120,6 @@ public class CardsControllerModel : MonoBehaviour
             }
         }
     }
-
 
     public void invokeLikesCards()
     {
@@ -319,6 +320,64 @@ public class CardsControllerModel : MonoBehaviour
         }
         StopCoroutine(AddToLikeCoroutine(movieId, movieTitle));
     }
+
+    public void GetMovieForPanoram(MovieCards movie)
+    {
+        StartCoroutine(GetMoviesForPanoramFromServer(Convert.ToInt32(movie.movieId)));
+    }
+
+
+    public IEnumerator GetMoviesForPanoramFromServer(int movieId)
+    {
+        string url = "http://localhost:3000/getmovieforpanoram?movie_id=" + movieId;
+
+
+        string moviead = Convert.ToString(movieId);
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                string json = www.downloadHandler.text;
+
+                MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
+                ToPanoram.Clear();
+                foreach (var movie in movies)
+                {
+                     moviead = movie.movieId;
+                    if (ToPanoram.Any(existingMovie => existingMovie.movieId == moviead))
+                    {
+                        continue;
+                    }
+
+
+
+                    string movieTitle = movie.movieTitle;
+                    string genre = movie.genre;
+                    string movieURL = movie.movieURL;
+                    string urlPhotoName = movie.urlPhotoName;
+                    string description = movie.discription;
+                    string likeId = movie.likeId;
+                    string favoriteId = movie.favoriteId;
+                    string watchedId = movie.watchedId;
+
+                    MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, moviead, likeId);
+                    ToPanoram.Add(movieCard);
+                }
+                OnInsertToPanoram?.Invoke();
+            }
+            else
+            {
+                Debug.LogError("Ошибка получения данных фильма " + www.error);
+            }
+        }
+    }
+
+
+
+
 
 
 
