@@ -1106,7 +1106,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   login: {fileID: 0}
   nickName: {fileID: 4924085694331172892}
+  userPhoto: 
+  PosterMovie: {fileID: 8336377297630385631}
   authUser: {fileID: 0}
+  profile:
+    userId: 
+    username: 
+    userPhoto: 
 --- !u!1 &7561346211980773398
 GameObject:
   m_ObjectHideFlags: 0

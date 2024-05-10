@@ -11,7 +11,7 @@ public class movePlayer : MonoBehaviour
 
     
 
-    [SerializeField] private  Camera playerCamera;
+    [SerializeField] private new Camera playerCamera;
     [SerializeField] private Transform pivot;
     [SerializeField] private bool isCameraEnabled = false;
 

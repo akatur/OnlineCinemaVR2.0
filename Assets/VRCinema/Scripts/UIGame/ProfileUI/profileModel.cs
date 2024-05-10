@@ -70,4 +70,25 @@ public class ProfileModel : MonoBehaviour
         }
         OnInsertProfile?.Invoke();
     }
+
+    public static IEnumerator LoadImageFromURL(string url, Image image)
+    {
+        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Texture2D texture = DownloadHandlerTexture.GetContent(www);
+
+                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                image.sprite = sprite;
+            }
+            else
+            {
+                Debug.LogError("Ошибка загрузки пользователя изображения: " + www.error);
+            }
+        }
+    }
+
 }

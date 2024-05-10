@@ -7,6 +7,8 @@ public class profilePresenter : MonoBehaviour
 {
     [SerializeField] private Text login;
     [SerializeField] private Text nickName;
+    public string userPhoto;
+    public Image PosterMovie;
 
     [SerializeField] private Button authUser;
 
@@ -16,9 +18,11 @@ public class profilePresenter : MonoBehaviour
     public void Init(Profile profile)
     {
         nickName.text = profile.username;
+        userPhoto = profile.userPhoto;
         this.profile = profile;
 
-
+        Debug.Log("PhotoUser" + userPhoto);
+        StartCoroutine(ProfileModel.LoadImageFromURL(userPhoto, PosterMovie));
 
         if (authUser != null)
         {
