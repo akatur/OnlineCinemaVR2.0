@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -46,10 +47,7 @@ public class AuthPresenter : MonoBehaviour
     [SerializeField] private TMP_InputField UrlPhotoInput;
     [SerializeField] private TMP_InputField MovieDiscriptionInput;
 
-
-
     [SerializeField] private Button MovieAddButton;
-
 
     // ссылка на модель 
     [Header("Scripts")]
@@ -59,13 +57,11 @@ public class AuthPresenter : MonoBehaviour
 
     private void Awake()
     {
+
         btnLogin.onClick.AddListener(Authorization);
         btnReg.onClick.AddListener(Registation);
-
         LOGUserButton.onClick.AddListener(SendDataAuth);
-
         REGUserButton.onClick.AddListener(SendDataReg);
-
         MovieAddButton.onClick.AddListener(SendDataNewMovie);
     }
 

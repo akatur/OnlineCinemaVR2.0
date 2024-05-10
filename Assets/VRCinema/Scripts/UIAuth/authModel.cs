@@ -16,6 +16,12 @@ using UnityEngine.Networking;
 using UnityEditor.Search;
 using UnityEngine.Analytics;
 
+
+
+
+
+
+
 public static class ConnectionInfo
 {
     public static string ip = "127.0.0.1";
@@ -32,21 +38,28 @@ public static class UserInfo
     public static string currentPassword;
 }
 
-//public class UserDat
-//{
-//    public static string userId;
 
-//}
-
-[Serializable]
+[Serializable] 
 public class ResponseData
 {
     public int user_id;
 
 }
 
+
 public class authModel : MonoBehaviour
 {
+
+
+    [SerializeField]  public movePlayer movePlayer;
+
+
+
+
+    public event Action OnEnableCameraControl;
+    public event Action OnDisableCameraControl;
+
+
     static string conectionString = $"server={ConnectionInfo.ip}; " +
        $"uid={ConnectionInfo.uid}; " +
        $"pwd={ConnectionInfo.pwd}; " +
@@ -69,6 +82,12 @@ public class authModel : MonoBehaviour
 
     static MySqlConnection con;
 
+
+    private void Start()
+    {
+        OnEnableCameraControl += movePlayer.EnableCameraControl;
+        OnDisableCameraControl += movePlayer.DisableCameraControl;
+    }
 
 
     private void OnApplicationQuit()
@@ -117,8 +136,7 @@ public class authModel : MonoBehaviour
             //Debug.Log("info---"+UserInfo.user_id);
             StartCoroutine(Authenticate(login, password));
             Debug.Log("Данные приняты");
-            UIAuth.SetActive(false);
-            UIGame.SetActive(true);
+            
         }
     }
 
@@ -145,16 +163,23 @@ public class authModel : MonoBehaviour
 
                     UserInfo.currentLogin = login;
                     UserInfo.user_id = responseData.user_id.ToString();
+                    
+
+                    UIAuth.SetActive(false);
+                    UIGame.SetActive(true);
+                    OnEnableCameraControl?.Invoke();
 
                     yield return true;
                 }
                 else
                 {
+                    OnDisableCameraControl?.Invoke();
                     Debug.Log("Ошибка аутентификации");
                 }
             }
             else
             {
+                OnDisableCameraControl?.Invoke();
                 Debug.Log("Ошибка при отправке запроса: " + www.error);
             }
         }
@@ -173,23 +198,8 @@ public class authModel : MonoBehaviour
         else
         {
             StartCoroutine(GetRegUser(login, password, nickname));
-            UIAuth.SetActive(false);
-            UIGame.SetActive(true);
+            
             Debug.Log("Что-то не так");
-
-            //if (GetRegUser( login,  password,  nickname))
-            //{
-            //    else
-            //    {
-            //        Debug.Log("Данные приняты");
-            //        UIAuth.SetActive(false);
-            //        UIGame.SetActive(true);
-            //    }
-            //}
-            //else
-            //{
-            //    Debug.Log("Что-то не так");
-            //}
         }
     }
 
@@ -215,15 +225,23 @@ public class authModel : MonoBehaviour
                 if (responseData != null && responseData.user_id > 0)
                 {
                     UserInfo.user_id = responseData.user_id.ToString();
+
+                    UIAuth.SetActive(false);
+                    UIGame.SetActive(true);
+                    OnEnableCameraControl?.Invoke();
+
+                    
                     Debug.Log("Регистрация успешно завершена");
                 }
                 else
                 {
+                    OnDisableCameraControl?.Invoke();
                     Debug.Log("Ошибка регистрации: неверный формат ответа сервера");
                 }
             }
             else
             {
+                OnDisableCameraControl?.Invoke();
                 Debug.Log("Ошибка при отправке запроса: " + www.error);
             }
         }
