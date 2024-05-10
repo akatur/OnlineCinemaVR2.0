@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 8048253061945853094}
   - component: {fileID: 8315842555507489917}
   m_Layer: 5
-  m_Name: btnFavorit
+  m_Name: btnExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282, y: -16}
+  m_AnchoredPosition: {x: 434, y: 292}
   m_SizeDelta: {x: 87.2851, y: 27.7454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6197857580150277235
@@ -105,20 +105,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 23
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Favorit
-
-'
+  m_Text: Exit
 --- !u!114 &8315842555507489917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,8 +562,8 @@ RectTransform:
   - {fileID: 4901119004914847696}
   - {fileID: 2422010605485387333}
   - {fileID: 2060086452374728334}
-  - {fileID: 5991592180205962079}
   - {fileID: 1134885128938905828}
+  - {fileID: 5991592180205962079}
   - {fileID: 6553357366703490311}
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -632,6 +630,7 @@ MonoBehaviour:
   btnDeleteFavorit: {fileID: 0}
   btnDeleteWatch: {fileID: 0}
   btnToPanoramCard: {fileID: 0}
+  btnExit: {fileID: 8315842555507489917}
   movieTitle: {fileID: 8348216639162538356}
   movieGenre: {fileID: 2563300865666626559}
   movieDiscription: {fileID: 7255337829604566742}

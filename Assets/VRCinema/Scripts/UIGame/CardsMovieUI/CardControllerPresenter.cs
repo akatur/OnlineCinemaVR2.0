@@ -42,6 +42,7 @@ public class CardControllerPresenter : MonoBehaviour
     [SerializeField] private MovieCardPresenter windowPanoram;
     [SerializeField] private Transform PanelPanoram;
     [SerializeField] private GameObject UIPanoram;
+    [SerializeField] private GameObject UIScroll;
     //watched
     [SerializeField] private MovieCardPresenter btnCardWatched;
     [SerializeField] private Transform PanelCardsWatched;
@@ -57,6 +58,7 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.OnInsertWatch += InstCardsWatch;
         cardsControllerModel.OnInsertAllMovies += LoadingCards;
         cardsControllerModel.OnInsertToPanoram += InstCardsToPanoram;
+
     }
 
     public void LoadingCards()
@@ -80,16 +82,6 @@ public class CardControllerPresenter : MonoBehaviour
         }
     }
 
-
-    
-    private void SelectPanoram(MovieCardPresenter movieCardPresenter)
-    {
-
-        cardsControllerModel.GetMovieForPanoram(movieCardPresenter.movie);
-        UIPanoram.SetActive(true);
-
-    }
-
     private void InstCardsToPanoram()
     {
         foreach (var item in cardPanoramList)
@@ -103,14 +95,27 @@ public class CardControllerPresenter : MonoBehaviour
             MovieCardPresenter likeCard;
             likeCard = Instantiate(windowPanoram, Vector3.zero, Quaternion.identity, PanelPanoram);
             likeCard.Init(item);
-            cardListLikes.Add(likeCard);
-            likeCard.OnButtonDeleteLikeClick += OnButtonClickDeleteLikes;
+            cardPanoramList.Add(likeCard);
+            likeCard.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
         }
     }
 
 
+    private void SelectPanoram(MovieCardPresenter movieCardPresenter)
+    {
+        cardsControllerModel.GetMovieForPanoram(movieCardPresenter.movie);
+        UIPanoram.SetActive(true);
+        UIScroll.SetActive(false);
+    }
 
-    private void InstCardsLikes()
+    private void OnButtonClickDeletePanoram(MovieCardPresenter movieCardPresenter)
+    {
+        UIPanoram.SetActive(false);
+        cardPanoramList.Remove(movieCardPresenter);
+    }
+    
+
+        private void InstCardsLikes()
     {
         foreach (var item in cardListLikes)
         {
@@ -127,8 +132,7 @@ public class CardControllerPresenter : MonoBehaviour
         }
     }
 
-    
-
+   
 
     private void InstCardsFav()
     {
@@ -161,9 +165,10 @@ public class CardControllerPresenter : MonoBehaviour
             likeCard.Init(item);
             cardListWatch.Add(likeCard);
             likeCard.OnButtonDeleteWatchClick += OnButtonClickDeleteWatch;
+
         }
     }
-
+   
     private void AddToLikes(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.AddToLike(movieCardPresenter.movie);
@@ -201,11 +206,9 @@ public class CardControllerPresenter : MonoBehaviour
         cardListWatch.Remove(movieCardPresenter);
     }
 
-    //private void PlayMovie(string movieURL, int movieId, string movieTitle)
-    //{
-    //    OnPlayMovie?.Invoke(movieURL, movieId, movieTitle);
-    //}
+    
 
+    
 
 
 

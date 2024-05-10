@@ -18,6 +18,7 @@ public class MovieCardPresenter : MonoBehaviour
     [SerializeField] private Button btnDeleteWatch;
 
     [SerializeField] private Button btnToPanoramCard;
+    [SerializeField] private Button btnExit;
 
     public Text movieTitle;
     public Text movieGenre;
@@ -35,13 +36,12 @@ public class MovieCardPresenter : MonoBehaviour
 
     public event Action <MovieCardPresenter> OnButtonToPanoramClick;
 
-    //public event Action <MovieCardPresenter> OnButtonPlayMovieClick;
 
     public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
     public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
     public event Action <MovieCardPresenter> OnButtonDeleteWatchClick;
+    public event Action <MovieCardPresenter> OnButtonDeletePanoramClick;
 
-    //public event Action <MovieCardPresenter> OnButtonSelectMovie;
 
     public void Init(MovieCards movie)
     {
@@ -56,8 +56,6 @@ public class MovieCardPresenter : MonoBehaviour
             movieDiscription.text = movie.discription;
         }
 
-        //movieGenre.text = movie.genre;
-        //movieDiscription.text = movie.discription;
         urlPhotoName = movie.urlPhotoName;
         this.movie = movie;
 
@@ -69,7 +67,19 @@ public class MovieCardPresenter : MonoBehaviour
             btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
             
         }
+        if (btnExit != null)
+        {
+            btnExit.onClick.AddListener(ButtonToDeletePanoramClick);
+            
+        }
 
+        
+
+        //if (btnToPanoramCard != null)
+        //{
+        //    btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
+        //    Destroy(this.gameObject);
+        //}
 
 
         if (btnLike != null)
@@ -106,16 +116,28 @@ public class MovieCardPresenter : MonoBehaviour
             btnDeleteWatch.onClick.AddListener(ButtonDeleteWatchClick);
         }
     }
+
+    public void ButtonToDeletePanoramClick()
+    {
+        OnButtonDeletePanoramClick?.Invoke(this);
+        Destroy(this.gameObject);
+    }
+
     public void ButtonToPanoramClick()
     {
         OnButtonToPanoramClick?.Invoke(this);
+        //Destroy(this.gameObject);
     }
     public void ButtonDeleteLikeClick()
     {
         OnButtonDeleteLikeClick?.Invoke(this);
         Destroy(this.gameObject);
     }
-
+    public void ButtonDeletePanoram()
+    {
+        OnButtonDeleteLikeClick?.Invoke(this);
+        Destroy(this.gameObject);
+    }
     public void ButtonDeleteFavClick()
     {
         OnButtonDeleteFavorClick?.Invoke(this);
