@@ -58,6 +58,8 @@ public class ProfileModel : MonoBehaviour
             string userId = UserInfo.user_id;
             string username = profile.username;
             string userPhoto = profile.userPhoto;
+            string city = profile.city;
+            string login = profile.login;
 
             if (ProfileList.Any(existingUser => existingUser.userId == userId))
             {
@@ -65,7 +67,7 @@ public class ProfileModel : MonoBehaviour
             }
 
             Debug.Log($"User: {username}");
-            Profile prof = new Profile( userId, username, userPhoto);
+            Profile prof = new Profile( userId, username, city, login, userPhoto);
             ProfileList.Add(prof);
         }
         OnInsertProfile?.Invoke();

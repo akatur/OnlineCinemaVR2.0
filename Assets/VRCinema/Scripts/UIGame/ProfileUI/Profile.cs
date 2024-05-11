@@ -8,13 +8,19 @@ public class Profile
     public string userId;
     [JsonProperty("username")]
     public string username;
+    [JsonProperty("login")]
+    public string login;
     [JsonProperty("user_photo")]
     public string userPhoto;
+    [JsonProperty("city")]
+    public string city;
 
-    public Profile(string userId, string username, string userPhoto)
+    public Profile(string userId, string username, string city,string login, string userPhoto)
     {
         this.userId = userId;
         this.username = username;
+        this.city = city;
+        this.login = login;
         this.userPhoto = userPhoto;
     }
 

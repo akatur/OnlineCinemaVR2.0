@@ -3,6 +3,7 @@ using UnityEngine;
 using MySql.Data.MySqlClient;
 using System;
 using UnityEngine.Networking;
+using System.Text.RegularExpressions;
 
 public static class ConnectionInfo
 {
@@ -164,14 +165,26 @@ public class authModel : MonoBehaviour
     {
         if (login == "" || password == "" || nickname == "")
         {
-            Debug.Log("Введите логин или пароль");
+            Debug.Log("Введите логин, пароль и никнейм");
         }
         else
         {
-            StartCoroutine(GetRegUser(login, password, nickname));
-            
-            Debug.Log("Что-то не так");
+            if (ContainsForbiddenCharacters(login) || ContainsForbiddenCharacters(password) || ContainsForbiddenCharacters(nickname))
+            {
+                Debug.Log("Логин, пароль или никнейм содержат запрещенные символы");
+            }
+            else
+            {
+                StartCoroutine(GetRegUser(login, password, nickname));
+                Debug.Log("Регистрация прошла успешно");
+            }
         }
+    }
+
+    private bool ContainsForbiddenCharacters(string input)
+    {
+        string pattern = @"[^\w]";
+        return Regex.IsMatch(input, pattern);
     }
 
 

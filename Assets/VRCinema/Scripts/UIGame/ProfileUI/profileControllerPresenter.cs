@@ -33,7 +33,6 @@ public class profileControllerPresenter : MonoBehaviour
             profile.transform.localPosition = Vector3.zero;
 
             //profile.Add(profile);
-
             //profile.OnButtonFavorClick += AddToFavorites;
             //profile.OnButtonLikeClick += AddToLikes;
             //profile.OnButtonWatchClick += AddTWatched;

@@ -37,7 +37,6 @@ public class MovieCardPresenter : MonoBehaviour
 
     public event Action <MovieCardPresenter> OnButtonToPanoramClick;
 
-
     public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
     public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
     public event Action <MovieCardPresenter> OnButtonDeleteWatchClick;
@@ -46,20 +45,14 @@ public class MovieCardPresenter : MonoBehaviour
 
     private void Start()
     {
-
-
-
         if (btnToPanoramCard != null)
         {
             btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
-
         }
         if (btnToBack != null)
         {
             btnToBack.onClick.AddListener(ButtonToDeletePanoramClick);
-
         }
-
         if (btnLike != null)
         {
             btnLike.onClick.AddListener(ButtonLikeClick);
@@ -73,11 +66,6 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnPosterMovie.onClick.AddListener(ButtonWatchClick);
         }
-        //if (btnPosterMovie != null)
-        //{
-        //    btnPosterMovie.onClick.AddListener(ButtonWatchClick);
-        //}
-
         if (btnDeleteLike != null)
         {
             btnDeleteLike.onClick.AddListener(ButtonDeleteLikeClick);
@@ -90,10 +78,7 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnDeleteWatch.onClick.AddListener(ButtonDeleteWatchClick);
         }
-
     }
-
-
 
     public void Init(MovieCards movie)
     {
@@ -113,19 +98,6 @@ public class MovieCardPresenter : MonoBehaviour
 
             Debug.Log("PosterImage"+urlPhotoName);
         StartCoroutine(CardsControllerModel.LoadImageFromURL(urlPhotoName, PosterMovie));
-
-       
-
-        
-
-        //if (btnToPanoramCard != null)
-        //{
-        //    btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
-        //    Destroy(this.gameObject);
-        //}
-
-
-       
     }
 
     public void ButtonToDeletePanoramClick()
@@ -136,12 +108,7 @@ public class MovieCardPresenter : MonoBehaviour
 
     public void ButtonToPanoramClick()
     {
-        //menuUiControll.UIFull.SetActive(true);
-
         OnButtonToPanoramClick?.Invoke(this);
-        
-
-        //Destroy(this.gameObject);
     }
     public void ButtonDeleteLikeClick()
     {

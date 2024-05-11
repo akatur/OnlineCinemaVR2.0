@@ -7,10 +7,13 @@ public class profilePresenter : MonoBehaviour
 {
     [SerializeField] private Text login;
     [SerializeField] private Text nickName;
+    [SerializeField] private Text city;
     public string userPhoto;
     public Image PosterMovie;
 
     [SerializeField] private Button authUser;
+
+
 
     public event Action<profilePresenter> OnButtonProfileClick;
 
@@ -19,6 +22,8 @@ public class profilePresenter : MonoBehaviour
     {
         nickName.text = profile.username;
         userPhoto = profile.userPhoto;
+        login.text = profile.login;
+        city.text = profile.city;
         this.profile = profile;
 
         Debug.Log("PhotoUser" + userPhoto);
@@ -28,7 +33,6 @@ public class profilePresenter : MonoBehaviour
         {
             authUser.onClick.AddListener(ButtonProfileClick);
         }
-
     }
 
     public void ButtonProfileClick()
