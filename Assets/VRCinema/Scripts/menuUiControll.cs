@@ -14,6 +14,8 @@ public class MenuUiControll : MonoBehaviour
     [SerializeField] private  GameObject UIMenu;
     [SerializeField] private  GameObject UISettings;
 
+    [SerializeField] public  GameObject UIFull;
+
     public bool isOpenedOne;
     public bool isOpenedTwo;
     public bool isOpenedTree;

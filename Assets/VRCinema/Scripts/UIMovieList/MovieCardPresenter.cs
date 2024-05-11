@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ public class MovieCardPresenter : MonoBehaviour
     [SerializeField] private Button btnDeleteWatch;
 
     [SerializeField] private Button btnToPanoramCard;
-    [SerializeField] private Button btnExit;
+    [SerializeField] private Button btnToBack;
 
     public Text movieTitle;
     public Text movieGenre;
@@ -27,7 +28,7 @@ public class MovieCardPresenter : MonoBehaviour
 
     public string urlPhotoName;
 
-    
+    MenuUiControll menuUiControll;
 
     public MovieCards movie;
     public event Action <MovieCardPresenter> OnButtonFavorClick;
@@ -43,52 +44,26 @@ public class MovieCardPresenter : MonoBehaviour
     public event Action <MovieCardPresenter> OnButtonDeletePanoramClick;
 
 
-    public void Init(MovieCards movie)
+    private void Start()
     {
-        movieTitle.text = movie.movieTitle;
 
-        if (movieGenre != null )
-        {
-            movieGenre.text = movie.genre;
-        }
-        if (movieDiscription != null)
-        {
-            movieDiscription.text = movie.discription;
-        }
 
-        urlPhotoName = movie.urlPhotoName;
-        this.movie = movie;
-
-            Debug.Log("PosterImage"+urlPhotoName);
-        StartCoroutine(CardsControllerModel.LoadImageFromURL(urlPhotoName, PosterMovie));
 
         if (btnToPanoramCard != null)
         {
             btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
-            
+
         }
-        if (btnExit != null)
+        if (btnToBack != null)
         {
-            btnExit.onClick.AddListener(ButtonToDeletePanoramClick);
-            
+            btnToBack.onClick.AddListener(ButtonToDeletePanoramClick);
+
         }
-
-        
-
-        //if (btnToPanoramCard != null)
-        //{
-        //    btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
-        //    Destroy(this.gameObject);
-        //}
-
 
         if (btnLike != null)
         {
             btnLike.onClick.AddListener(ButtonLikeClick);
         }
-
-
-
 
         if (btnFavorit != null)
         {
@@ -115,17 +90,57 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnDeleteWatch.onClick.AddListener(ButtonDeleteWatchClick);
         }
+
+    }
+
+
+
+    public void Init(MovieCards movie)
+    {
+        movieTitle.text = movie.movieTitle;
+
+        if (movieGenre != null )
+        {
+            movieGenre.text = movie.genre;
+        }
+        if (movieDiscription != null)
+        {
+            movieDiscription.text = movie.discription;
+        }
+
+        urlPhotoName = movie.urlPhotoName;
+        this.movie = movie;
+
+            Debug.Log("PosterImage"+urlPhotoName);
+        StartCoroutine(CardsControllerModel.LoadImageFromURL(urlPhotoName, PosterMovie));
+
+       
+
+        
+
+        //if (btnToPanoramCard != null)
+        //{
+        //    btnToPanoramCard.onClick.AddListener(ButtonToPanoramClick);
+        //    Destroy(this.gameObject);
+        //}
+
+
+       
     }
 
     public void ButtonToDeletePanoramClick()
     {
-        OnButtonDeletePanoramClick?.Invoke(this);
-        Destroy(this.gameObject);
+        gameObject.SetActive(false);
+        
     }
 
     public void ButtonToPanoramClick()
     {
+        //menuUiControll.UIFull.SetActive(true);
+
         OnButtonToPanoramClick?.Invoke(this);
+        
+
         //Destroy(this.gameObject);
     }
     public void ButtonDeleteLikeClick()

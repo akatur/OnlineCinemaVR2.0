@@ -32,6 +32,7 @@ public class CardControllerPresenter : MonoBehaviour
 
     [SerializeField] private CardsControllerModel cardsControllerModel;
     
+    
     [SerializeField] private Transform PanelCards;
     [SerializeField] private Transform PanelCardsFav;
 
@@ -42,11 +43,13 @@ public class CardControllerPresenter : MonoBehaviour
     [SerializeField] private MovieCardPresenter windowPanoram;
     [SerializeField] private Transform PanelPanoram;
     [SerializeField] private GameObject UIPanoram;
+    [SerializeField] private GameObject UIfill;
     [SerializeField] private GameObject UIScroll;
     //watched
     [SerializeField] private MovieCardPresenter btnCardWatched;
     [SerializeField] private Transform PanelCardsWatched;
 
+    MovieCardPresenter movieCardPresenter;
     TopMenuController topMenuController;
 
 
@@ -59,6 +62,7 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.OnInsertAllMovies += LoadingCards;
         cardsControllerModel.OnInsertToPanoram += InstCardsToPanoram;
 
+        windowPanoram.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
     }
 
     public void LoadingCards()
@@ -84,35 +88,42 @@ public class CardControllerPresenter : MonoBehaviour
 
     private void InstCardsToPanoram()
     {
-        foreach (var item in cardPanoramList)
-        {
-            Destroy(item.gameObject);
-        }
-        cardPanoramList.Clear();
-
         foreach (var item in cardsControllerModel.ToPanoram)
         {
-            MovieCardPresenter likeCard;
-            likeCard = Instantiate(windowPanoram, Vector3.zero, Quaternion.identity, PanelPanoram);
-            likeCard.Init(item);
-            cardPanoramList.Add(likeCard);
-            likeCard.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
+            windowPanoram.Init(item);
         }
-    }
 
+
+        //foreach (var item in cardPanoramList)
+        //{
+        //    Destroy(item.gameObject);
+        //}
+        //cardPanoramList.Clear();
+
+        //foreach (var item in cardsControllerModel.ToPanoram)
+        //{
+        //    MovieCardPresenter likeCard;
+        //    likeCard = Instantiate(windowPanoram, Vector3.zero, Quaternion.identity, PanelPanoram);
+        //    likeCard.Init(item);
+        //    cardPanoramList.Add(likeCard);
+        //    likeCard.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
+
+        //}
+    }
+    private void OnButtonClickDeletePanoram(MovieCardPresenter movieCardPresenter)
+    {
+        UIPanoram.SetActive(false);
+    }
 
     private void SelectPanoram(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.GetMovieForPanoram(movieCardPresenter.movie);
         UIPanoram.SetActive(true);
-        UIScroll.SetActive(false);
+        UIfill.SetActive(true);
+        //UIScroll.SetActive(false);
     }
 
-    private void OnButtonClickDeletePanoram(MovieCardPresenter movieCardPresenter)
-    {
-        UIPanoram.SetActive(false);
-        cardPanoramList.Remove(movieCardPresenter);
-    }
+    
     
 
         private void InstCardsLikes()

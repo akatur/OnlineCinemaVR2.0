@@ -630,7 +630,7 @@ MonoBehaviour:
   btnDeleteFavorit: {fileID: 0}
   btnDeleteWatch: {fileID: 0}
   btnToPanoramCard: {fileID: 0}
-  btnExit: {fileID: 8315842555507489917}
+  btnToBack: {fileID: 8315842555507489917}
   movieTitle: {fileID: 8348216639162538356}
   movieGenre: {fileID: 2563300865666626559}
   movieDiscription: {fileID: 7255337829604566742}

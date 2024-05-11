@@ -12,6 +12,9 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private Button btnFavourite;
     [SerializeField] private Button btnWatched;
     [SerializeField] private Button btnProfile;
+    [SerializeField] private Button btnBackPan;
+
+
     //[SerializeField] private Button btnPanoram;
 
 
@@ -22,6 +25,7 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private GameObject UIFavouritesList;
     [SerializeField] private GameObject UIWatchedList;
     [SerializeField] private GameObject UIProfile;
+    [SerializeField] private GameObject UIPan;
     
 
     //public event Action<MovieCards> OnButtonLikeClick;
@@ -56,7 +60,16 @@ public class TopMenuController : MonoBehaviour
         btnWatched.onClick.AddListener(cardsControllerModel.invokeWatchCards);
 
         btnProfile.onClick.AddListener(StateWindowUIProfile);
+
+        btnBackPan.onClick.AddListener(StateWindowBack);
+       
+
+
         btnProfile.onClick.AddListener(profileModel.invokeProfile);
+
+
+
+
 
         //btnPanoram.onClick.AddListener(StateWindowUIPanoram);
 
@@ -76,7 +89,10 @@ public class TopMenuController : MonoBehaviour
         UIProfile.SetActive(false);
     }
 
-    
+    private void StateWindowBack()
+    {
+        UIPan.SetActive(false);
+    }
 
     private void StateWindowUILikes()
     {
