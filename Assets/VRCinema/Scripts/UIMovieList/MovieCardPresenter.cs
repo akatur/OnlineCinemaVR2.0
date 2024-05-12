@@ -21,9 +21,9 @@ public class MovieCardPresenter : MonoBehaviour
     [SerializeField] private Button btnToPanoramCard;
     [SerializeField] private Button btnToBack;
 
-    public Text movieTitle;
-    public Text movieGenre;
-    public Text movieDiscription;
+    public TMP_Text movieTitle;
+    public TMP_Text movieGenre;
+    public TMP_Text movieDiscription;
     public Image PosterMovie;
 
     public string urlPhotoName;

@@ -1,4 +1,4 @@
-using Unity.PlasticSCM.Editor.WebApi;
+
 using UnityEngine;
 
 public class MenuUiControll : MonoBehaviour
@@ -14,7 +14,7 @@ public class MenuUiControll : MonoBehaviour
     [SerializeField] private  GameObject UIMenu;
     [SerializeField] private  GameObject UISettings;
 
-    [SerializeField] public  GameObject UIFull;
+    //[SerializeField] public  GameObject UIFull;
 
     public bool isOpenedOne;
     public bool isOpenedTwo;

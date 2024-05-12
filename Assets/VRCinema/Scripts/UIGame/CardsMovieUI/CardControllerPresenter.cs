@@ -1,15 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Data;
-using MySql.Data;
-using MySql.Data.MySqlClient;
-using UnityEditor.MemoryProfiler;
-using UnityEngine.Video;
-using TMPro;
-using System;
-using Unity.VisualScripting;
 
 public class CardControllerPresenter : MonoBehaviour
 {

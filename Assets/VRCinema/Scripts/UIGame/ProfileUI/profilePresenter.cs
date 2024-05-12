@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class profilePresenter : MonoBehaviour
 {
-    [SerializeField] private Text login;
-    [SerializeField] private Text nickName;
-    [SerializeField] private Text city;
+    [SerializeField] private TMP_Text login;
+    [SerializeField] private TMP_Text nickName;
+    [SerializeField] private TMP_Text city;
     public string userPhoto;
     public Image PosterMovie;
 

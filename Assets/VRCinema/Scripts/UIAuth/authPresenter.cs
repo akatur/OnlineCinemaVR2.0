@@ -26,6 +26,7 @@ public class AuthPresenter : MonoBehaviour
 
     //RegistrationImputs
     [SerializeField] private TMP_InputField regInputNickName;
+   
 
     [SerializeField] private TMP_InputField regInputLogin;
 
