@@ -36,12 +36,10 @@ public class MovieCardPresenter : MonoBehaviour
     public event Action <MovieCardPresenter> OnButtonWatchClick;
 
     public event Action <MovieCardPresenter> OnButtonToPanoramClick;
-
     public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
     public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
     public event Action <MovieCardPresenter> OnButtonDeleteWatchClick;
-    public event Action <MovieCardPresenter> OnButtonDeletePanoramClick;
-
+    //public event Action <MovieCardPresenter> OnButtonDeletePanoramClick;
 
     private void Start()
     {
@@ -92,11 +90,10 @@ public class MovieCardPresenter : MonoBehaviour
         {
             movieDiscription.text = movie.discription;
         }
-
         urlPhotoName = movie.urlPhotoName;
         this.movie = movie;
 
-            Debug.Log("PosterImage"+urlPhotoName);
+        Debug.Log("PosterImage"+urlPhotoName);
         StartCoroutine(CardsControllerModel.LoadImageFromURL(urlPhotoName, PosterMovie));
     }
 

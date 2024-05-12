@@ -417,7 +417,11 @@ MonoBehaviour:
   btnDeleteLike: {fileID: 6456894850565655572}
   btnDeleteFavorit: {fileID: 0}
   btnDeleteWatch: {fileID: 0}
+  btnToPanoramCard: {fileID: 0}
+  btnToBack: {fileID: 0}
   movieTitle: {fileID: 3917875992443136232}
+  movieGenre: {fileID: 0}
+  movieDiscription: {fileID: 0}
   PosterMovie: {fileID: 9089876953736486636}
   urlPhotoName: 
   movie:

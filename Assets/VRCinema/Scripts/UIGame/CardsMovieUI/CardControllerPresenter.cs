@@ -32,10 +32,8 @@ public class CardControllerPresenter : MonoBehaviour
 
     [SerializeField] private CardsControllerModel cardsControllerModel;
     
-    
     [SerializeField] private Transform PanelCards;
     [SerializeField] private Transform PanelCardsFav;
-
     //likes
     [SerializeField] private MovieCardPresenter btnCardLike;
     [SerializeField] private Transform PanelCardsLike;
@@ -52,7 +50,6 @@ public class CardControllerPresenter : MonoBehaviour
     MovieCardPresenter movieCardPresenter;
     TopMenuController topMenuController;
 
-
     private void Start()
     {
         LoadingCards();
@@ -61,8 +58,7 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.OnInsertWatch += InstCardsWatch;
         cardsControllerModel.OnInsertAllMovies += LoadingCards;
         cardsControllerModel.OnInsertToPanoram += InstCardsToPanoram;
-
-        windowPanoram.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
+        //windowPanoram.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
     }
 
     public void LoadingCards()
@@ -92,24 +88,8 @@ public class CardControllerPresenter : MonoBehaviour
         {
             windowPanoram.Init(item);
         }
-
-
-        //foreach (var item in cardPanoramList)
-        //{
-        //    Destroy(item.gameObject);
-        //}
-        //cardPanoramList.Clear();
-
-        //foreach (var item in cardsControllerModel.ToPanoram)
-        //{
-        //    MovieCardPresenter likeCard;
-        //    likeCard = Instantiate(windowPanoram, Vector3.zero, Quaternion.identity, PanelPanoram);
-        //    likeCard.Init(item);
-        //    cardPanoramList.Add(likeCard);
-        //    likeCard.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
-
-        //}
     }
+
     private void OnButtonClickDeletePanoram(MovieCardPresenter movieCardPresenter)
     {
         UIPanoram.SetActive(false);
@@ -120,13 +100,9 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.GetMovieForPanoram(movieCardPresenter.movie);
         UIPanoram.SetActive(true);
         UIfill.SetActive(true);
-        //UIScroll.SetActive(false);
     }
 
-    
-    
-
-        private void InstCardsLikes()
+    private void InstCardsLikes()
     {
         foreach (var item in cardListLikes)
         {
@@ -142,8 +118,6 @@ public class CardControllerPresenter : MonoBehaviour
             likeCard.OnButtonDeleteLikeClick += OnButtonClickDeleteLikes;
         }
     }
-
-   
 
     private void InstCardsFav()
     {
@@ -176,7 +150,6 @@ public class CardControllerPresenter : MonoBehaviour
             likeCard.Init(item);
             cardListWatch.Add(likeCard);
             likeCard.OnButtonDeleteWatchClick += OnButtonClickDeleteWatch;
-
         }
     }
    
@@ -184,7 +157,6 @@ public class CardControllerPresenter : MonoBehaviour
     {
         cardsControllerModel.AddToLike(movieCardPresenter.movie);
     }
-
     private void AddToFavorites(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.AddToFavorites(movieCardPresenter.movie);
@@ -193,44 +165,23 @@ public class CardControllerPresenter : MonoBehaviour
     {
         cardsControllerModel.AddTWatched(movieCardPresenter.movie);
     }
-
     private void PlayMovies(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.PlayMovie(movieCardPresenter.movie);
     }
-
     private void OnButtonClickDeleteLikes(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.OnButtonClickDeleteLike(movieCardPresenter.movie);
         cardListLikes.Remove(movieCardPresenter);
     }
-
     private void OnButtonClickDeleteFav(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.OnButtonClickDeleteFav(movieCardPresenter.movie);
         cardListFav.Remove(movieCardPresenter);
     }
-
     private void OnButtonClickDeleteWatch(MovieCardPresenter movieCardPresenter)
     {
         cardsControllerModel.OnButtonClickDeleteWatch(movieCardPresenter.movie);
         cardListWatch.Remove(movieCardPresenter);
     }
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

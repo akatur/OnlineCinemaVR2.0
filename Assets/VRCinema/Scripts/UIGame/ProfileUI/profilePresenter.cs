@@ -13,8 +13,6 @@ public class profilePresenter : MonoBehaviour
 
     [SerializeField] private Button authUser;
 
-
-
     public event Action<profilePresenter> OnButtonProfileClick;
 
     public Profile profile;
