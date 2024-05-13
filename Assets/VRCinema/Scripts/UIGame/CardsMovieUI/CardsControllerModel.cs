@@ -8,6 +8,7 @@ using System;
 using Newtonsoft.Json;
 using UnityEngine.Networking;
 using System.Linq;
+using UnityEditor.Search;
 
 public class CardsControllerModel : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class CardsControllerModel : MonoBehaviour
     public List<MovieCards> FavouritesList = new();
     public List<MovieCards> WatchedList = new();
     public List<MovieCards> ToPanoram = new();
+
+    //public Dropdown genreDropdown;
+    public TMP_Dropdown genreDropdown;
 
     private HashSet<string> uniqueTitlesInt = new HashSet<string>();
 
@@ -42,6 +46,14 @@ public class CardsControllerModel : MonoBehaviour
         }
     }
 
+
+    [System.Serializable]
+    public class GenreData
+    {
+        public string genres;
+    }
+
+
     private void Start()
     {
         GetMovie();
@@ -50,6 +62,7 @@ public class CardsControllerModel : MonoBehaviour
     public void GetMovie()
     {
         StartCoroutine(GetMoviesFromServer());
+        StartCoroutine(GetGenresFromServer());
     }
    
 
@@ -93,6 +106,125 @@ public class CardsControllerModel : MonoBehaviour
 
         www.Dispose();
         StopCoroutine(GetMoviesFromServer());
+    }
+
+    public IEnumerator GetGenresFromServer()
+    {
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/getgenres");
+
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            string json = www.downloadHandler.text;
+            Debug.Log("Полученный JSON: " + json);
+            try
+            {
+                GenreData[] genreDataArray = JsonConvert.DeserializeObject<GenreData[]>(json);
+
+                genreDropdown.ClearOptions();
+
+                List<TMP_Dropdown.OptionData> dropdownOptions = new List<TMP_Dropdown.OptionData>();
+
+                foreach (GenreData genreData in genreDataArray)
+                {
+                    dropdownOptions.Add(new TMP_Dropdown.OptionData(genreData.genres));
+                }
+
+                genreDropdown.AddOptions(dropdownOptions);
+            }
+            catch (JsonException ex)
+            {
+                Debug.LogError("Ошибка разбора JSON: " + ex.Message);
+            }
+        }
+        else
+        {
+            Debug.LogError("Ошибка получения данных о жанрах " + www.error);
+        }
+
+        www.Dispose();
+    }
+
+
+
+    public IEnumerator GetMoviesToSearchFromServer(string searchTerm)
+    {
+        string url = $"http://localhost:3000/searchmovie?term={UnityWebRequest.EscapeURL(searchTerm)}";
+
+        UnityWebRequest www = UnityWebRequest.Get(url);
+
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            string json = www.downloadHandler.text;
+
+            MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
+            MovieList.Clear();
+            foreach (var movie in movies)
+            {
+                string movieId = movie.movieId;
+                if (MovieList.Any(existingMovie => existingMovie.movieId == movieId))
+                {
+                    continue;
+                }
+                string movieTitle = movie.movieTitle;
+                string genre = movie.genre;
+                string movieURL = movie.movieURL;
+                string urlPhotoName = movie.urlPhotoName;
+                string description = movie.discription;
+                string likeId = movie.likeId;
+                string favoriteId = movie.favoriteId;
+                string watchedId = movie.watchedId;
+
+                MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+                MovieList.Add(movieCard);
+            }
+            OnInsertAllMovies?.Invoke();
+        }
+        else
+        {
+            Debug.LogError("Ошибка получения данных фильма " + www.error);
+        }
+
+        www.Dispose();
+    }
+
+
+    public IEnumerator GetMoviesToGenreshFromServer(string genreTerm)
+    {
+        string url = $"http://localhost:3000/getgenresinmoviecard?term={UnityWebRequest.EscapeURL(genreTerm)}";
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.LogError($"Ошибка получения данных фильма по адресу {url}: {www.error}");
+                yield break;
+            }
+
+            string json = www.downloadHandler.text;
+
+            MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
+            MovieList.Clear();
+            foreach (var movie in movies)
+            {
+                int existingIndex = MovieList.FindIndex(existingMovie => existingMovie.movieId == movie.movieId);
+                if (existingIndex != -1)
+                {
+                    MovieList[existingIndex] = movie;
+                }
+                else
+                {
+                    MovieList.Add(movie);
+                }
+            }
+
+            OnInsertAllMovies?.Invoke();
+        }
     }
 
     public static IEnumerator LoadImageFromURL(string url, Image image)

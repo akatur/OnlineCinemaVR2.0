@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +12,8 @@ public class CardControllerPresenter : MonoBehaviour
     [SerializeField] private List<MovieCardPresenter> cardListWatch = new List<MovieCardPresenter>();
 
     [SerializeField] private List<MovieCardPresenter> cardPanoramList = new List<MovieCardPresenter>();
+
+    [SerializeField] private TMP_Dropdown genreDropdown;
 
     [SerializeField] private MovieCardPresenter btnCard;
     [SerializeField] private MovieCardPresenter btnCardFav;
@@ -62,6 +66,7 @@ public class CardControllerPresenter : MonoBehaviour
         foreach (var item in cardsControllerModel.MovieList)
         {
             MovieCardPresenter movieCard;
+            
             movieCard = Instantiate(btnCard, Vector3.zero, Quaternion.identity, PanelCards);
             movieCard.Init(item);
             cardListMovies.Add(movieCard);
@@ -72,6 +77,7 @@ public class CardControllerPresenter : MonoBehaviour
             movieCard.OnButtonToPanoramClick += SelectPanoram;
         }
     }
+
 
     private void InstCardsToPanoram()
     {

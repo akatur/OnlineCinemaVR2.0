@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,11 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private Button btnProfile;
     [SerializeField] private Button btnBackPan;
 
+    [SerializeField] private Button btnAccept;
+    [SerializeField] private Button btnSearch;
+    [SerializeField] private TMP_InputField imputSearch;
+
+    [SerializeField] private TMP_Dropdown genreDropdown;
 
     //[SerializeField] private Button btnPanoram;
 
@@ -26,8 +32,8 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private GameObject UIWatchedList;
     [SerializeField] private GameObject UIProfile;
     [SerializeField] private GameObject UIPan;
-    
 
+    
     //public event Action<MovieCards> OnButtonLikeClick;
 
     private GameObject activeWindow = null;
@@ -39,10 +45,10 @@ public class TopMenuController : MonoBehaviour
 
     private void Awake()
     {
-        btnLike.interactable = false;
-        btnFavourite.interactable = false;
-        btnWatched.interactable = false;
-        btnBack.interactable = false;
+        //btnLike.interactable = false;
+        //btnFavourite.interactable = false;
+        //btnWatched.interactable = false;
+        //btnBack.interactable = false;
 
         btnFavourite.gameObject.SetActive(false);
         btnWatched.gameObject.SetActive(false);
@@ -62,17 +68,17 @@ public class TopMenuController : MonoBehaviour
         btnProfile.onClick.AddListener(StateWindowUIProfile);
 
         btnBackPan.onClick.AddListener(StateWindowBack);
-       
 
+        btnAccept.onClick.AddListener(StateAccept);
 
         btnProfile.onClick.AddListener(profileModel.invokeProfile);
 
-
-
+        imputSearch.gameObject.SetActive(true);
+        btnSearch.gameObject.SetActive(true);
+        btnSearch.onClick.AddListener(SendDataSearch);
 
 
         //btnPanoram.onClick.AddListener(StateWindowUIPanoram);
-
         btnBack.onClick.AddListener(Back);
     }
 
@@ -87,6 +93,10 @@ public class TopMenuController : MonoBehaviour
         UIWatchedList.SetActive(false);
         UIFavouritesList.SetActive(false);
         UIProfile.SetActive(false);
+        imputSearch.gameObject.SetActive(true);
+        btnSearch.gameObject.SetActive(true);
+        genreDropdown.gameObject.SetActive(true);
+        btnAccept.gameObject.SetActive(true);
     }
 
     private void StateWindowBack()
@@ -125,19 +135,26 @@ public class TopMenuController : MonoBehaviour
         if (UIProfile.activeSelf)
         {
             ToggleButtons(true);
-
-            btnLike.interactable = true;
-            btnBack.interactable = true;
-            btnFavourite.interactable = true;
-            btnWatched.interactable = true;
+            //btnLike.interactable = true;
+            //btnBack.interactable = true;
+            //btnFavourite.interactable = true;
+            //btnWatched.interactable = true;
+            imputSearch.gameObject.SetActive(false);
+            btnSearch.gameObject.SetActive(false);
+            genreDropdown.gameObject.SetActive(false);
+            btnAccept.gameObject.SetActive(false);
         }
         else
         {
+            genreDropdown.gameObject.SetActive(true);
+            imputSearch.gameObject.SetActive(true);
+            btnSearch.gameObject.SetActive(true);
+            btnAccept.gameObject.SetActive(true);
             ToggleButtons(false);
-            btnLike.interactable = false;
-            btnBack.interactable = false;
-            btnFavourite.interactable = false;
-            btnWatched.interactable = false;
+            //btnLike.interactable = false;
+            //btnBack.interactable = false;
+            //btnFavourite.interactable = false;
+            //btnWatched.interactable = false;
         }
     }
 
@@ -155,27 +172,47 @@ public class TopMenuController : MonoBehaviour
 
         if (window == UIScrollCards)
         {
-            
-            btnBack.interactable = false;
-            btnLike.interactable = false;
-            btnBack.interactable = false;
-            btnFavourite.interactable = false;
-            btnWatched.interactable = false;
+            genreDropdown.gameObject.SetActive(true);
+            imputSearch.gameObject.SetActive(true);
+            btnSearch.gameObject.SetActive(true);
+            btnAccept.gameObject.SetActive(true);
+            //btnBack.interactable = false;
+            //btnLike.interactable = false;
+            //btnFavourite.interactable = false;
+            //btnWatched.interactable = false;
             return;
         }
         window.SetActive(true);
         activeWindow = window;
     }
 
-    private void OnLogUserButtonClick()
+    public void SendDataSearch()
     {
-        if (activeWindow != null)
+        string searchTerm = imputSearch.text.Trim();
+
+        if (searchTerm != "")
         {
-            btnBack.gameObject.SetActive(false);
-            btnBack.interactable = false;
-            UIScrollCards.SetActive(true);
-            activeWindow.SetActive(false);
-            activeWindow = null;
+            StartCoroutine(cardsControllerModel.GetMoviesToSearchFromServer(searchTerm));
+        }
+        else
+        {
+            StartCoroutine(cardsControllerModel.GetMoviesFromServer());
+            Debug.Log("¬ведите в строку поиска");
+        }
+    }
+
+    public void StateAccept()
+    {
+        string genreTerm = genreDropdown.captionText.text;
+        Debug.Log(genreTerm);
+        if (genreTerm != "")
+        {
+            StartCoroutine(cardsControllerModel.GetMoviesToGenreshFromServer(genreTerm));
+        }
+        else
+        {
+            StartCoroutine(cardsControllerModel.GetMoviesFromServer());
+            Debug.Log("¬ведите в строку поиска");
         }
     }
 }

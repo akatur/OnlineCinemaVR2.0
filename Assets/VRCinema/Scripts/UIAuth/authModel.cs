@@ -183,10 +183,10 @@ public class authModel : MonoBehaviour
 
     private bool ContainsForbiddenCharacters(string input)
     {
-        string pattern = @"[^\w]";
-        return Regex.IsMatch(input, pattern);
+        return Regex.IsMatch(input, @"^\d+$");
     }
 
+   
 
     private IEnumerator GetRegUser(string login, string password, string nickname)
     {
