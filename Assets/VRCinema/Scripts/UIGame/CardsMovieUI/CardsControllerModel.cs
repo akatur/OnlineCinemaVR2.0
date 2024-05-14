@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using UnityEngine.Networking;
 using System.Linq;
 using UnityEditor.Search;
+using System.Drawing.Printing;
 
 public class CardsControllerModel : MonoBehaviour
 {
@@ -50,12 +51,13 @@ public class CardsControllerModel : MonoBehaviour
     [System.Serializable]
     public class GenreData
     {
-        public string genres;
+        public string namegGenres;
     }
 
 
     private void Start()
     {
+        
         GetMovie();
     }
 
@@ -64,7 +66,6 @@ public class CardsControllerModel : MonoBehaviour
         StartCoroutine(GetMoviesFromServer());
         StartCoroutine(GetGenresFromServer());
     }
-   
 
     public IEnumerator GetMoviesFromServer()
     {
@@ -105,7 +106,7 @@ public class CardsControllerModel : MonoBehaviour
         }
 
         www.Dispose();
-        StopCoroutine(GetMoviesFromServer());
+        StopCoroutine("GetMoviesFromServer");
     }
 
     public IEnumerator GetGenresFromServer()
@@ -128,7 +129,7 @@ public class CardsControllerModel : MonoBehaviour
 
                 foreach (GenreData genreData in genreDataArray)
                 {
-                    dropdownOptions.Add(new TMP_Dropdown.OptionData(genreData.genres));
+                    dropdownOptions.Add(new TMP_Dropdown.OptionData(genreData.namegGenres)); 
                 }
 
                 genreDropdown.AddOptions(dropdownOptions);
@@ -199,12 +200,6 @@ public class CardsControllerModel : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.LogError($"Ошибка получения данных фильма по адресу {url}: {www.error}");
-                yield break;
-            }
 
             string json = www.downloadHandler.text;
 

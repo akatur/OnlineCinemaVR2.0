@@ -8,7 +8,7 @@ public class MovieCards
     public string movieTitle;
     [JsonProperty("movie_photo")]
     public string urlPhotoName;
-    [JsonProperty("genres")]
+    [JsonProperty("namegGenres")]
     public string genre;
     [JsonProperty("url_move")]
     public string movieURL;
