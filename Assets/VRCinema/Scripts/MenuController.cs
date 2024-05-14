@@ -22,10 +22,6 @@ public class MenuController : MonoBehaviour
         btnNext.onClick.AddListener(StateWindowUIMenu);
         btnBack.onClick.AddListener(StateWindowCloseUISettings);
 
-
-
-        //UIMenu.gameObject.SetActive(false);
-        //btnBack.gameObject.SetActive(false);
     }
 
     private void StateWindowUISettings()

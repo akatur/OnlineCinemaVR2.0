@@ -33,7 +33,7 @@ public class MenuUiControll : MonoBehaviour
     void Update()
     {
        
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             isOpenedOne = !isOpenedOne;
 
@@ -75,7 +75,7 @@ public class MenuUiControll : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.RightShift))
         {
             if (UserInfo.currentLogin == "admin")
             {
