@@ -57,6 +57,8 @@ public class TopMenuController : MonoBehaviour
         btnWatched.gameObject.SetActive(false);
         btnLike.gameObject.SetActive(false);
         btnBack.gameObject.SetActive(false);
+
+        VideoPlayerController.gameObject.SetActive(false);
         
 
         btnLike.onClick.AddListener(StateWindowUILikes);

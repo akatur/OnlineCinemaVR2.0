@@ -6,7 +6,7 @@ public class VideoController : MonoBehaviour
     //IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     public GameObject videoPlayer;
-    private MyVideoPlayer videoPlayerScript;
+    private VideoPlayer videoPlayerScript;
 
     void Start()
     {

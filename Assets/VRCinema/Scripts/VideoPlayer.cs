@@ -4,13 +4,13 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class MyVideoPlayer : MonoBehaviour
+public class VideoPlayer : MonoBehaviour
 {
     [SerializeField] private Button btnPlay;
     [SerializeField] private Button btnPause;
     [SerializeField] private Slider progressBar;
     [SerializeField] private Slider knob;
-    [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private UnityEngine.Video.VideoPlayer videoPlayer;
 
     private bool isDraggingKnob = false;
 
@@ -18,7 +18,7 @@ public class MyVideoPlayer : MonoBehaviour
     {
         if (videoPlayer == null)
         {
-            videoPlayer = GetComponent<VideoPlayer>();
+            videoPlayer = GetComponent<UnityEngine.Video.VideoPlayer>();
         }
 
         btnPause.gameObject.SetActive(false);

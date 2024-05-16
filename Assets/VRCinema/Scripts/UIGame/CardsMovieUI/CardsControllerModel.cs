@@ -15,7 +15,7 @@ using UnityEngine.UIElements.Experimental;
 
 public class CardsControllerModel : MonoBehaviour
 {
-    [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private UnityEngine.Video.VideoPlayer videoPlayer;
 
     public event Action OnInsertAllMovies;
     public event Action OnInsertLikes;

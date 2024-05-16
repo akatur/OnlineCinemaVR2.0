@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class videocontroll : MonoBehaviour
 {
-    private VideoPlayer videoPlayer;
+    private UnityEngine.Video.VideoPlayer videoPlayer;
 
     void Start()
     {
-        videoPlayer = GetComponent<VideoPlayer>();
+        videoPlayer = GetComponent<UnityEngine.Video.VideoPlayer>();
     }
 
     void Update()
