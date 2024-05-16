@@ -435,7 +435,6 @@ public class CardsControllerModel : MonoBehaviour
         OnInsertWatch?.Invoke();
     }
 
-
     public void AddToLike(MovieCards movie)
     {
         StartCoroutine(AddToLikeCoroutine(Convert.ToInt32(movie.movieId), movie.movieTitle));
@@ -517,9 +516,7 @@ public class CardsControllerModel : MonoBehaviour
                     string duration = movie.duration;
                     string rating = movie.rating;
 
-
                     MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, release_year, duration, rating, genre, description, urlPhotoName, movieURL, movieid, likeId);
-
                     ToPanoram.Add(movieCard);
                 }
                 OnInsertToPanoram?.Invoke();
@@ -530,12 +527,6 @@ public class CardsControllerModel : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-
 
     public void AddToFavorites(MovieCards movie)
     {

@@ -31,8 +31,6 @@ public class MovieCardPresenter : MonoBehaviour
 
     public string urlPhotoName;
 
-    MenuUiControll menuUiControll;
-
     public MovieCards movie;
     public event Action <MovieCardPresenter> OnButtonFavorClick;
     public event Action <MovieCardPresenter> OnButtonLikeClick;
@@ -42,7 +40,6 @@ public class MovieCardPresenter : MonoBehaviour
     public event Action <MovieCardPresenter> OnButtonDeleteLikeClick;
     public event Action <MovieCardPresenter> OnButtonDeleteFavorClick;
     public event Action <MovieCardPresenter> OnButtonDeleteWatchClick;
-    //public event Action <MovieCardPresenter> OnButtonDeletePanoramClick;
 
     private void Start()
     {
@@ -103,7 +100,6 @@ public class MovieCardPresenter : MonoBehaviour
             realeaseYear.text = movie.release_year;
         }
 
-        
         if (movieDiscription != null)
         {
             movieDiscription.text = movie.discription;
@@ -120,7 +116,6 @@ public class MovieCardPresenter : MonoBehaviour
         gameObject.SetActive(false);
         
     }
-
     public void ButtonToPanoramClick()
     {
         OnButtonToPanoramClick?.Invoke(this);
@@ -161,29 +156,5 @@ public class MovieCardPresenter : MonoBehaviour
     {
         OnButtonWatchClick?.Invoke(this);
     }
-
-   
-
-
-
-    //IEnumerator LoadImageFromURL(string urlPhotoName)
-    //{
-    //    UnityWebRequest www = UnityWebRequestTexture.GetTexture(urlPhotoName);
-    //    yield return www.SendWebRequest();
-
-    //    if (www.result == UnityWebRequest.Result.Success)
-    //    {
-    //        Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-    //        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-    //        PosterMovie.sprite = sprite;
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Failed to load image: " + www.error);
-    //    }
-    //}
-
-
-
 
 }
