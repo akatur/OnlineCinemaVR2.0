@@ -9,8 +9,6 @@ public class movePlayer : MonoBehaviour
     public float zoomSpeed = 10.0f;
     public bool isCursorVisible;
 
-    
-
     [SerializeField] private  Camera playerCamera;
     [SerializeField] private Transform pivot;
     [SerializeField] private bool isCameraEnabled = false;
@@ -53,9 +51,7 @@ public class movePlayer : MonoBehaviour
         currentRotation.y = Mathf.Clamp(currentRotation.y, -maxYAngle, maxYAngle);
 
         pivot.rotation = Quaternion.Euler(0, currentRotation.x, 0);
-        // Вращаем только pivot по оси Y
         playerCamera.transform.rotation = Quaternion.Euler(currentRotation.y, currentRotation.x, 0);
-        // Вращаем камеру относительно pivot
     }
 
     private void HandleZoom()
@@ -65,13 +61,12 @@ public class movePlayer : MonoBehaviour
         if (playerCamera.orthographic)
         {
             playerCamera.orthographicSize -= zoomInput * zoomSpeed;
-            playerCamera.orthographicSize = Mathf.Clamp(playerCamera.orthographicSize, 1f, 10f); // Ограничение зума для ортографической камеры
+            playerCamera.orthographicSize = Mathf.Clamp(playerCamera.orthographicSize, 1f, 10f); 
         }
         else
         {
             playerCamera.fieldOfView -= zoomInput * zoomSpeed;
             playerCamera.fieldOfView = Mathf.Clamp(playerCamera.fieldOfView, 10f, 60f); 
-            // Ограничение зума для перспективной камеры
         }
     }
 

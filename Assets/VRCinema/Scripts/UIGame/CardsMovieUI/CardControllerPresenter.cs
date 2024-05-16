@@ -11,15 +11,11 @@ public class CardControllerPresenter : MonoBehaviour
     [SerializeField] private List<MovieCardPresenter> cardListFav = new List<MovieCardPresenter>();
     [SerializeField] private List<MovieCardPresenter> cardListWatch = new List<MovieCardPresenter>();
 
-    [SerializeField] private List<MovieCardPresenter> cardPanoramList = new List<MovieCardPresenter>();
-
-    [SerializeField] private TMP_Dropdown genreDropdown;
-
     [SerializeField] private MovieCardPresenter btnCard;
     [SerializeField] private MovieCardPresenter btnCardFav;
 
-    [SerializeField] private GameObject[] btnFavorit;
-    [SerializeField] private GameObject[] btnLike;
+    //[SerializeField] private GameObject[] btnFavorit;
+    //[SerializeField] private GameObject[] btnLike;
 
     [SerializeField] private Button btnLikes;
 
@@ -42,8 +38,6 @@ public class CardControllerPresenter : MonoBehaviour
     [SerializeField] private MovieCardPresenter btnCardWatched;
     [SerializeField] private Transform PanelCardsWatched;
 
-    MovieCardPresenter movieCardPresenter;
-    TopMenuController topMenuController;
 
     private void Start()
     {
@@ -53,7 +47,6 @@ public class CardControllerPresenter : MonoBehaviour
         cardsControllerModel.OnInsertWatch += InstCardsWatch;
         cardsControllerModel.OnInsertAllMovies += LoadingCards;
         cardsControllerModel.OnInsertToPanoram += InstCardsToPanoram;
-        //windowPanoram.OnButtonDeletePanoramClick += OnButtonClickDeletePanoram;
     }
 
     public void LoadingCards()
@@ -87,10 +80,7 @@ public class CardControllerPresenter : MonoBehaviour
         }
     }
 
-    private void OnButtonClickDeletePanoram(MovieCardPresenter movieCardPresenter)
-    {
-        UIPanoram.SetActive(false);
-    }
+    
 
     private void SelectPanoram(MovieCardPresenter movieCardPresenter)
     {

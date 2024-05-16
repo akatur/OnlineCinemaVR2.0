@@ -101,7 +101,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.5686275, b: 0.9339623, a: 0.22745098}
+  m_Color: {r: 0, g: 0.5686275, b: 0.9339623, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -476,6 +476,9 @@ MonoBehaviour:
   btnToBack: {fileID: 0}
   movieTitle: {fileID: 7420936533611012318}
   movieGenre: {fileID: 0}
+  rating: {fileID: 0}
+  duration: {fileID: 0}
+  realeaseYear: {fileID: 0}
   movieDiscription: {fileID: 0}
   PosterMovie: {fileID: 9089876953736486636}
   urlPhotoName: 
@@ -490,6 +493,9 @@ MonoBehaviour:
     userId: 
     favoriteId: 
     watchedId: 
+    rating: 
+    duration: 
+    release_year: 
 --- !u!1 &9137216591905229542
 GameObject:
   m_ObjectHideFlags: 0

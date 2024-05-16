@@ -115,9 +115,7 @@ public class authModel : MonoBehaviour
     }
 
     private IEnumerator Authenticate(string login, string password)
-    {
-        
-
+    { 
         string url = "http://localhost:3000/login";
         WWWForm form = new WWWForm();
         form.AddField("login", login);

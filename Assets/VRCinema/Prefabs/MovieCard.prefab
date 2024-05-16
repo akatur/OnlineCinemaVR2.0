@@ -746,7 +746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.5686275, b: 0.9339623, a: 0.22745098}
+  m_Color: {r: 0, g: 0.5686275, b: 0.9339623, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -785,6 +785,9 @@ MonoBehaviour:
   btnToBack: {fileID: 0}
   movieTitle: {fileID: 5627158598292565114}
   movieGenre: {fileID: 4102486818808483520}
+  rating: {fileID: 0}
+  duration: {fileID: 0}
+  realeaseYear: {fileID: 0}
   movieDiscription: {fileID: 0}
   PosterMovie: {fileID: 3835754348143973084}
   urlPhotoName: 
@@ -799,6 +802,9 @@ MonoBehaviour:
     userId: 
     favoriteId: 
     watchedId: 
+    rating: 
+    duration: 
+    release_year: 
 --- !u!1 &9137216591905229542
 GameObject:
   m_ObjectHideFlags: 0

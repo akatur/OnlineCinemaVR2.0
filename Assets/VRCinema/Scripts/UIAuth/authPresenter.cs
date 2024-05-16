@@ -58,7 +58,6 @@ public class AuthPresenter : MonoBehaviour
 
     private void Awake()
     {
-
         btnLogin.onClick.AddListener(Authorization);
         btnReg.onClick.AddListener(Registation);
         LOGUserButton.onClick.AddListener(SendDataAuth);
@@ -89,7 +88,6 @@ public class AuthPresenter : MonoBehaviour
         string login = logInputLogin.text.Trim();
         string password = logInputPsw.text.Trim(); 
         authModel.LoginUser(login, password);
-        
     }
 
     public void SendDataReg()

@@ -23,6 +23,9 @@ public class MovieCardPresenter : MonoBehaviour
 
     public TMP_Text movieTitle;
     public TMP_Text movieGenre;
+    public TMP_Text rating;
+    public TMP_Text duration;
+    public TMP_Text realeaseYear;
     public TMP_Text movieDiscription;
     public Image PosterMovie;
 
@@ -55,7 +58,6 @@ public class MovieCardPresenter : MonoBehaviour
         {
             btnLike.onClick.AddListener(ButtonLikeClick);
         }
-
         if (btnFavorit != null)
         {
             btnFavorit.onClick.AddListener(ButtonFavClick);
@@ -86,6 +88,22 @@ public class MovieCardPresenter : MonoBehaviour
         {
             movieGenre.text = movie.genre;
         }
+
+        if (rating != null)
+        {
+            rating.text = movie.rating;
+        }
+
+        if (duration != null)
+        {
+            duration.text = movie.duration;
+        }
+        if (realeaseYear != null)
+        {
+            realeaseYear.text = movie.release_year;
+        }
+
+        
         if (movieDiscription != null)
         {
             movieDiscription.text = movie.discription;

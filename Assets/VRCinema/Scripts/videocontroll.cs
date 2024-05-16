@@ -12,17 +12,17 @@ public class videocontroll : MonoBehaviour
 
     void Update()
     {
-       
+
         if (Input.GetKeyDown(KeyCode.F))
         {
-            
+
             if (videoPlayer.isPlaying)
             {
-                videoPlayer.Pause(); 
+                videoPlayer.Pause();
             }
             else
             {
-                videoPlayer.Play(); 
+                videoPlayer.Play();
             }
         }
 

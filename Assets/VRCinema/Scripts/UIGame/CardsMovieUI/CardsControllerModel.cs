@@ -10,6 +10,8 @@ using UnityEngine.Networking;
 using System.Linq;
 using UnityEditor.Search;
 using System.Drawing.Printing;
+using Google.Protobuf.WellKnownTypes;
+using UnityEngine.UIElements.Experimental;
 
 public class CardsControllerModel : MonoBehaviour
 {
@@ -95,7 +97,12 @@ public class CardsControllerModel : MonoBehaviour
                 string favoriteId = movie.favoriteId;
                 string watchedId = movie.watchedId;
 
-                MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+                string release_year = movie.release_year;
+                string duration = movie.duration;
+                string rating = movie.rating;
+
+                MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, release_year, duration, rating, genre, description, urlPhotoName, movieURL, movieId, likeId);
+               
                 MovieList.Add(movieCard);
             }
             OnInsertAllMovies?.Invoke();
@@ -106,7 +113,7 @@ public class CardsControllerModel : MonoBehaviour
         }
 
         www.Dispose();
-        StopCoroutine("GetMoviesFromServer");
+        StopCoroutine(GetMoviesFromServer());
     }
 
     public IEnumerator GetGenresFromServer()
@@ -179,7 +186,13 @@ public class CardsControllerModel : MonoBehaviour
                 string favoriteId = movie.favoriteId;
                 string watchedId = movie.watchedId;
 
-                MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+
+                string release_year = movie.release_year;
+                string duration = movie.duration;
+                string rating = movie.rating;
+
+                MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, release_year, duration, rating, genre, description, urlPhotoName, movieURL, movieId, likeId);
+
                 MovieList.Add(movieCard);
             }
             OnInsertAllMovies?.Invoke();
@@ -248,17 +261,17 @@ public class CardsControllerModel : MonoBehaviour
         Debug.Log(userId);
         UnityWebRequest www = UnityWebRequest.Get("http://localhost:3000/likes?user_id=" + userId);
 
-        StartCoroutine(ProcessRequest(www));
+        StartCoroutine(ProcessRequestLike(www));
     }
 
-    private IEnumerator ProcessRequest(UnityWebRequest www)
+    private IEnumerator ProcessRequestLike(UnityWebRequest www)
     {
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.Success)
         {
             string json = www.downloadHandler.text;
-            ParseAndSortData(json);
+            ParseAndSortDataLike(json);
         }
         else
         {
@@ -266,7 +279,7 @@ public class CardsControllerModel : MonoBehaviour
         }
     }
 
-    private void ParseAndSortData(string json)
+    private void ParseAndSortDataLike(string json)
     {
         MovieCards[] movies = JsonConvert.DeserializeObject<MovieCards[]>(json);
         Debug.Log(json + " like");
@@ -288,9 +301,16 @@ public class CardsControllerModel : MonoBehaviour
             string likeId = movie.likeId;
             string favoriteId = movie.favoriteId;
             string watchedId = movie.watchedId;
+            string release_year = movie.release_year;
+            string duration = movie.duration;
+            string rating = movie.rating;
 
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-            MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+            
+            
+
+            MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, release_year, duration, rating, genre, description, urlPhotoName, movieURL, movieId, likeId);
+
             LikeList.Add(movieCard);
         }
         OnInsertLikes?.Invoke();
@@ -343,8 +363,14 @@ public class CardsControllerModel : MonoBehaviour
             string watchedId = movie.watchedId;
 
 
+            string release_year = movie.release_year;
+            string duration = movie.duration;
+            string rating = movie.rating;
+
+            MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, release_year, duration, rating, genre, description, urlPhotoName, movieURL, movieId, likeId);
+
             Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-            MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+
             FavouritesList.Add(movieCard);
         }
         OnInsertFav?.Invoke();
@@ -396,8 +422,13 @@ public class CardsControllerModel : MonoBehaviour
             string favoriteId = movie.favoriteId;
             string watchedId = movie.watchedId;
 
-            Debug.Log($"Title: {movieTitle}, Genre: {genre}, URL: {movieURL}, Photo: {urlPhotoName}, Description: {description}, ID: {movieId}");
-            MovieCards movieCard = new MovieCards(movieTitle, userId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, movieId, likeId);
+            string release_year = movie.release_year;
+            string duration = movie.duration;
+            string rating = movie.rating;
+
+            
+            MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, release_year, duration, rating, genre, description, urlPhotoName, movieURL, movieId, likeId);
+           
             WatchedList.Add(movieCard);
             Debug.Log(movieCard);
         }
@@ -467,13 +498,11 @@ public class CardsControllerModel : MonoBehaviour
                 ToPanoram.Clear();
                 foreach (var movie in movies)
                 {
-                     moviead = movie.movieId;
+                    string movieid = movie.movieId;
                     if (ToPanoram.Any(existingMovie => existingMovie.movieId == moviead))
                     {
                         continue;
                     }
-
-
 
                     string movieTitle = movie.movieTitle;
                     string genre = movie.genre;
@@ -484,7 +513,13 @@ public class CardsControllerModel : MonoBehaviour
                     string favoriteId = movie.favoriteId;
                     string watchedId = movie.watchedId;
 
-                    MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, genre, description, urlPhotoName, movieURL, moviead, likeId);
+                    string release_year = movie.release_year;
+                    string duration = movie.duration;
+                    string rating = movie.rating;
+
+
+                    MovieCards movieCard = new MovieCards(movieTitle, likeId, watchedId, favoriteId, release_year, duration, rating, genre, description, urlPhotoName, movieURL, movieid, likeId);
+
                     ToPanoram.Add(movieCard);
                 }
                 OnInsertToPanoram?.Invoke();
@@ -507,7 +542,7 @@ public class CardsControllerModel : MonoBehaviour
         StartCoroutine(AddFavorite(Convert.ToInt32(movie.movieId), movie.movieTitle));
     }
 
-    IEnumerator AddFavorite(int movieId, string movieTitle)
+    private IEnumerator AddFavorite(int movieId, string movieTitle)
     {
         WWWForm form = new WWWForm();
         form.AddField("movieId", movieId.ToString());
@@ -536,7 +571,7 @@ public class CardsControllerModel : MonoBehaviour
         StartCoroutine(AddTWatch(Convert.ToInt32(movie.movieId), movie.movieTitle));
     }
 
-    IEnumerator AddTWatch(int movieId, string movieTitle)
+    private IEnumerator AddTWatch(int movieId, string movieTitle)
     {
         WWWForm form = new WWWForm();
         form.AddField("movieId", movieId.ToString());
@@ -659,7 +694,6 @@ public class CardsControllerModel : MonoBehaviour
     public void PlayMovie(MovieCards movie)
     {
         videoPlayer.url = movie.movieURL;
-        int watchedId = Convert.ToInt32(movie.movieId);
         videoPlayer.Play();
     }
 }

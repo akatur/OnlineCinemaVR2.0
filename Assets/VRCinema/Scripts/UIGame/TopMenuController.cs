@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Net;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,8 @@ public class TopMenuController : MonoBehaviour
     [SerializeField] private GameObject UIWatchedList;
     [SerializeField] private GameObject UIProfile;
     [SerializeField] private GameObject UIPan;
+
+    [SerializeField] private GameObject VideoPlayerController;
 
     
     //public event Action<MovieCards> OnButtonLikeClick;
